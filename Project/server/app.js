@@ -7,11 +7,12 @@ const port = process.env.PORT   ||  2000;
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
-const Area = require("./models/region");0
- const Sec = require("./models/security");
+const Area = require("./models/region");
+const Sec = require("./models/security");
+const Apps = require("./models/application");
 // const Crit = require("./models/applicationcrit");
 // const Apm = require("./models/apmid");
-// const Apps = require("./models/application");
+
 // const AppOwn = require("./models/appowner");
 // const UseTable = require("./models/usertable");
 // const AppTable = require("./models/apptable");
@@ -97,10 +98,12 @@ app.post("/regions",async (req, res) => {
     }
 })
 
+// to set the security group table details
+
 app.get("/security", (req, res) => {
         res.render("security");
 })
-// to set the security group table details
+
 
 app.post("/security", async (req, res) => {
     try{
@@ -122,6 +125,12 @@ app.post("/security", async (req, res) => {
 
 }
 )
+
+//to set the application type table
+
+app.get("/app",(req, res) => {
+    res.render("");
+})
 
 
 app.get("/register",(req,res) => {
