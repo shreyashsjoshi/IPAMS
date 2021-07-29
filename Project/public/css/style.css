@@ -2,6 +2,10 @@ h1{
     color: darkcyan ;
 
 }
+
+h2{
+    color: orange;
+}
 div.a {
     text-align: center;
     font-family: 'Monserrat', sans-serif;
