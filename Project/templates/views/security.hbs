@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="a">
+        {{>header}}
+        {{>navbar}}
+    <form action="/security" method="POST">
+    <label for="SGID">Security Group ID:-</label>
+    <input type="text" name="sgid" id="sgid"><br>
+    <label for="SGN">Security Group Name:-</label>
+    <input type="text" name="sgn" id="sgn"><br>
+    <label for="Notes">Notes:-</label>
+    <input type="text" name="notes" id="notes"><br>
+    <label for="sdate">Start Date:-</label>
+    <input type="text" name="sdate" id="sdate"><br>
+    <label for="edate">End Date:-</label>
+    <input type="text" name="edate" id="edate"><br>
+    <label for="delete">Delete:-</label>
+    <input type="text" name="delete" id="delete"><br>
+    <button type="submit">Save</button>
+    </form>
+    {{>footer}}
+    </div>    
+</body>
+</html>

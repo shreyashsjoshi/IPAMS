@@ -7,14 +7,14 @@ const port = process.env.PORT   ||  2000;
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
-const Area = require("./models/region");
-const Sec = require("./models/security");
-const Crit = require("./models/applicationcrit");
-const Apm = require("./models/apmid");
-const Apps = require("./models/application");
-const AppOwn = require("./models/appowner");
-const UseTable = require("./models/usertable");
-const AppTable = require("./models/apptable");
+const Area = require("./models/region");0
+ const Sec = require("./models/security");
+// const Crit = require("./models/applicationcrit");
+// const Apm = require("./models/apmid");
+// const Apps = require("./models/application");
+// const AppOwn = require("./models/appowner");
+// const UseTable = require("./models/usertable");
+// const AppTable = require("./models/apptable");
 
 
 
@@ -66,7 +66,7 @@ app.post("/logged",async (req, res) => {
     try{
         const regiIp = new Ipadd({
         ipadders : req.body.ipadders,
-        sub : req.body.sub,
+        sub : req.body.sub
     })
         const ipadd = await regiIp.save();
         res.status(201).render("index")
@@ -82,21 +82,46 @@ app.get("/regions",(req, res) =>{
 // to save regions
 app.post("/regions",async (req, res) => {
     try{
-        const placeID = new Area({
-        RegionID : req.body.RegionID,
-        Region : req.body.Region,
-        PostalAddress : req.body.PostalAddress,
-        Notes : req.body.Notes,
-        Version : req.body.Version,
-        Delete : req.body.Delete
+        const place = new Area({
+        regionid : req.body.regionid,
+        region : req.body.region,
+        postaladdress : req.body.postaladdress,
+        notes : req.body.notes,
+        version : req.body.version,
+        delete : req.body.delete
     })
-        const area = await placeID.save();
+        const area = await place.save();
         res.status(201).render("index")
     }catch(error){
         res.status(400).send(error);
     }
 })
 
+app.get("/security", (req, res) => {
+        res.render("security");
+})
+// to set the security group table details
+
+app.post("/security", async (req, res) => {
+    try{
+        const secGT = new Sec({
+            sgid : req.body.sgid,
+            sgn : req.body.sgn,
+            notes : req.body.notes,
+            sdate : req.body.sdate,
+            edate : req.body.edate,
+            delete : req.body.delete
+
+        })
+            const sec = await secGT.save();
+            res.status(201).render("index")
+    }catch(error){
+        res.status(400).send(error);
+
+    }
+
+}
+)
 
 
 app.get("/register",(req,res) => {

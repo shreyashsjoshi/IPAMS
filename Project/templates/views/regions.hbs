@@ -11,22 +11,25 @@
             <div class="a">
         {{>header}}
         {{>navbar}}
-    <form action="/logged" method="POST">
+    <form action="/regions" method="POST">
         <label for="Region">Please enter Region ID:-</label>
-        <input type="text" id="protocol" name ="RegionID"><br>
+        <input type="text" id="protocol" name ="regionid"><br>
         <label for="Region">Please enter Region:-</label>
-        <input type="text" id="protocol" name ="Region"><br>
+        <input type="text" id="protocol" name ="region"><br>
         <label for="Region">Please enter PostalAddress:-</label>
-        <input type="text" id="protocol" name ="PostalAddress"><br>
+        <input type="text" id="protocol" name ="postaladdress"><br>
         <label for="Region">Notes:-</label>
-        <input type="text" id="protocol" name ="Notes"><br>
+        <input type="text" id="protocol" name ="notes"><br>
+        <label for="Region">Date:-</label>
+        <input type="text" id="protocol" name ="date"><br>
         <label for="Region">Version:-</label>
-        <input type="text" id="protocol" name ="Version"><br>
+        <input type="text" id="protocol" name ="version"><br>
         <label for="Region">Delete:-</label>
-        <input type="text" id="protocol" name ="Delete"><br>
+        <input type="text" id="protocol" name ="delete"><br>
         <button type="submit">Save</button>        
 
     </form>
+    {{>footer}}
     </div>
 </body>
 </html>

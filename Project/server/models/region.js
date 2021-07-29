@@ -1,26 +1,26 @@
 const mongoose = require("mongoose");
 
 const RegionSchema = new mongoose.Schema({
-    RegionID:{
+    regionid:{
         type : Number
     },
-    Region:{
+    region:{
         type : String
     },
-    PostalAddress: {
+    postaladdress: {
         type : Number
     },
-    Notes : {
+    notes : {
         type :  String
     },
-    Date : {
-        type : Date,
+    date : {
+        type : Date
     },
-    Version : {
+    version : {
         type : Number
     },
 
-    Delete : {
+    delete : {
         type : String
     }
 

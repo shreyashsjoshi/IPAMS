@@ -1,28 +1,28 @@
 const mongoose = require("mongoose");
 
 const SecuritySchema = new mongoose.Schema({
-        SecutiryGroupID : {
+        sgid : {
             type : Number
         },
-        SecutiryGroupName : {
+        sgid : {
             type : String
         },
-        Notes : {
+        notes : {
             type: String
         },
-        StartDate : {
-            type : Date
+        sdate : {
+            type : String
         },
-        EndDate : {
-            type: Date
+        edate : {
+            type: String
         },
 
-        Delete : {
+        delete : {
             type:String
         }
 
 })
 
-const Sec = new mongoose.model("safe", SecuritySchema)
+const Sec = new mongoose.model("secure", SecuritySchema)
 
 module.exports = Sec;
