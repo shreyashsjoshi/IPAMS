@@ -4,7 +4,7 @@ const SecuritySchema = new mongoose.Schema({
         sgid : {
             type : Number
         },
-        sgid : {
+        sgn : {
             type : String
         },
         notes : {

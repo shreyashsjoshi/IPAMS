@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="a">
+    {{>header}}
+    {{>navbar}}
+        <form action="/apmid" method="POST">
+    <h2>Welcome to the APMID</h2>
+        <label for="apmuuid">APMUUID:-</label>
+        <input type="text" name="apmuuid" id="apmuuid"><br>
+        
+        <label for="apmid">Enter the APM ID:-</label>
+        <input type="text" name="apmid" id="apmid"><br>
+        
+        <label for="appname">Application Name:-</label>
+        <input type="text" name="appname" id="appname"><br>
+
+        <label for="appnotes">Notes:-</label>
+        <input type="text" name="appnotes" id="appnotes"><br>
+
+        <label for="date">Date:-</label>
+        <input type="text" name="date" id="date"><br>
+        
+        <label for="delete">Delete:-</label>
+        <input type="text" name="delete" id="delete"><br>
+
+        <button type="submit">Save</button>
+    {{>footer}}
+    </form>
+    </div>
+</body>
+</html>

@@ -1,28 +1,28 @@
 const mongoose = require("mongoose");
 
 const OwnSchema = new mongoose.Schema({
-        AppOwnerID : {
+        appownerid : {
             type:Number
         },
-        AppOwnemMail : {
+        appownermail : {
             type:String
         },
-        AppTelephone : {
+        apptelephone : {
             type:Number
         },
-        AppFName : {
+        appfname : {
             type:String
         },
-        AppLName : {
+        applname : {
             type:String
         },
-        AppCrit : {
+        appcrit : {
             type:String
         },
-        Date : {
-            type:Date
+        date : {
+            type: String
         },
-        Delete : {
+        delete : {
             type:String
         }
 })

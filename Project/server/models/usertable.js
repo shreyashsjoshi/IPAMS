@@ -1,32 +1,32 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-        IPAMID : {
+        ipamid : {
+            type : Number
+        },
+        uname : {
+            type : String
+        },
+        utype : {
+            type : String
+        },
+        upri : {
+            type : String
+        },
+        notes : {
+            type : String
+        },
+        date : {
+            type : String
+        },
+        version : {
             type:Number
         },
-        UserName : {
-            type:String
-        },
-        UserType : {
-            type:String
-        },
-        UserPri : {
-            type:String
-        },
-        Notes : {
-            type:String
-        },
-        Date : {
-            type:Date
-        },
-        Version : {
-            type:Number
-        },
-        Delete : {
+        delete : {
             type:String
         }
 })
 
-const UseTable = new mongoose.model("UseTable", UserSchema);
+const Usetable = new mongoose.model("utable", UserSchema);
 
-module.exports = UseTable;
+module.exports = Usetable;

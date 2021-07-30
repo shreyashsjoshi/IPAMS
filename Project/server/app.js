@@ -11,10 +11,10 @@ const Area = require("./models/region");
 const Sec = require("./models/security");
 const Apps = require("./models/application");
 const Crit = require("./models/applicationcrit");
-// const Apm = require("./models/apmid");
+const Apm = require("./models/apmid");
+const AppOwn = require("./models/appowner");
+const Usetable = require("./models/usertable");
 
-// const AppOwn = require("./models/appowner");
-// const UseTable = require("./models/usertable");
 // const AppTable = require("./models/apptable");
 
 
@@ -176,12 +176,93 @@ app.post("/appcrit",async (req, res) => {
 
 })
 
+//for APMID table
 
+app.get("/apmid",(req, res) =>{
+    res.render("apmid");
+})
+
+
+app.post("/apmid", async (req, res) => {
+    try{
+        const apmid = new Apm({
+            apmuuid : req.body.apmuuid,
+            apmid : req.body.apmid,
+            appname : req.body.appname,
+            appnotes : req.body.appnotes,
+            date : req.body.date,
+            delete : req.body.delete
+
+        })        
+        const apm = await apmid.save();
+        res.status(201).render("index");
+
+    }catch(error){
+        res.status(400).send(error);
+    }
+
+})
+
+//app owner table
+
+app.get("/appowner",(req, res) => {
+        res.render("appowner");
+
+})
+
+app.post("/appowner",async (req, res) => {
+        try{
+            const own = new AppOwn({
+                appownerid : req.body.appownerid,
+                appownermail : req.body.appownermail,
+                apptelephone : req.body.apptelephone,
+                appfname : req.body.appfname,
+                applname : req.body.applname,
+                appcrit : req.body.appcrit,
+                date : req.body.date,
+                delete : req.body.delete
+            })
+            const appown = await own.save();
+            res.status(201).render("index");
+
+        }catch(error){
+            res.status(400).send(error);
+        }
+
+})
+
+
+//users table
+
+app.get("/users", (req, res) => {
+    res.render("users");
+})
+
+app.post("/users",async (req, res) => {
+        try{
+            const useit = new Usetable({
+                ipamid : req.body.ipamid,
+                uname : req.body.uname,
+                utype : req.body.utype,
+                upri : req.body.upri,
+                notes : req.body.notes,
+                date : req.body.date,
+                delete : req.body.delete
+            })
+            const usetable = await useit.save();
+            res.status(201).render("index");
+
+        }catch(error){
+            res.status(400).send(error);
+        }
+})
+
+//to register the users into the DB
 
 app.get("/register",(req,res) => {
     res.render("register");
 })
-//to register the users into the DB
+
 app.post("/register", async (req, res) =>{
     try{
         const password = req.body.pass;

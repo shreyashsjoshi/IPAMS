@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
 
 const ApmSchema = new mongoose.Schema({
-    ApmUUID : {
+    apmuuid : {
         type:Number
     },
-    ApmID : {
+    apmid : {
         type:Number
     },
-    AppName : {
+    appname : {
         type:String
     },
-    AppNotes : {
+    appnotes : {
         type:String
     },
-    Date : {
-        type:Date
+    date : {
+        type: String
     },
-    Delete : {
+    delete : {
         type:String
     }
 
