@@ -1,21 +1,21 @@
 const mongoose = require("mongoose");
 
 const AppSchema = new mongoose.Schema({
-        ApplicationTypeID : {
+        atid : {
             type:Number
         },
         
-        ApplicationTypeName : {
+        atname : {
             type:String
         },
         
-        ApplicationTypeNotes : {
+        atnote : {
             type:String
         },
-        Date : {
-            type:Date
+        date : {
+            type: String
         },
-        Delete : {
+        delete : {
             type:String
         }
 })

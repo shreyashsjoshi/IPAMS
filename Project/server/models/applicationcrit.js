@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
 const CritSchema = new mongoose.Schema({
-        AppCritID : {
-            type:Number
+        appcritid : {
+            type : Number
         },
-        AppCritName : {
-            type:String
+        appcritname : {
+            type : String
         },
-        AppCritNotes : {
-            type:String
+        appcritnote : {
+            type : String
         },
-        Date : {
-            type:Date
+        date : {
+            type : String
         },
-        Delete : {
-            type:String
+        delete : {
+            type : String
         }
 
 })

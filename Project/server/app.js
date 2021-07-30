@@ -10,7 +10,7 @@ const Ipadd = require("./models/registerip");
 const Area = require("./models/region");
 const Sec = require("./models/security");
 const Apps = require("./models/application");
-// const Crit = require("./models/applicationcrit");
+const Crit = require("./models/applicationcrit");
 // const Apm = require("./models/apmid");
 
 // const AppOwn = require("./models/appowner");
@@ -109,7 +109,7 @@ app.post("/security", async (req, res) => {
     try{
         const secGT = new Sec({
             sgid : req.body.sgid,
-            sgn : req.body.sgn,
+            sgn : req.body.sgn, 
             notes : req.body.notes,
             sdate : req.body.sdate,
             edate : req.body.edate,
@@ -128,9 +128,54 @@ app.post("/security", async (req, res) => {
 
 //to set the application type table
 
-app.get("/app",(req, res) => {
-    res.render("");
+app.get("/apptype",(req, res) => {
+    res.render("apptype");
 })
+
+app.post("/apptype", async (req, res) => {
+    try{
+        const appli = new Apps({
+                atip : req.body.atid,
+                atname : req.body.atname,
+                atnote : req.body.atnote,
+                date : req.body.date,
+                delete : req.body.delete
+        })
+            const apps = await appli.save();
+            res.status(201).render("index");
+    }catch(error){
+        res.status(400).send(error);
+
+    }
+
+})
+
+//to set the application criticality
+
+app.get("/appcrit",(req, res) => {
+    res.render("appcrit");
+
+})
+
+app.post("/appcrit",async (req, res) => {
+    try{
+        const criti = new Crit({
+            appcritid : req.body.appcritid,
+            appcritname : req.body.appcritname,
+            appcritnote : req.body.appcritnote,
+            date : req.body.date,
+            delete : req.body.delete
+        })
+        const crit = await criti.save();
+        res.status(201).render("index");
+
+    }catch(error)
+    {
+        res.status(400).send(error);
+    }
+
+})
+
 
 
 app.get("/register",(req,res) => {

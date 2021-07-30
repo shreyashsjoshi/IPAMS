@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="a">
+        {{>header}}
+        {{>navbar}}
+        <h2>Application Type</h2>
+    <form action="/apptype" method="POST">
+        <label for="appid">Application Type ID :- </label>
+        <input type="text" name="atid" id="atid"><br>
+        <label for="appname">Application Type Name:-</label>
+        <input type="text" name="atname" id="atname"><br>
+        <label for="appnote">Application Note</label>
+        <input type="text" name="atnote" id="atnote"><br>
+        <label for="date">Date:-</label>
+        <input type="text" name="date" id="date"><br>
+        <label for="delete">Delete:-</label>
+        <input type="text" name="delete" id="delete"><br>
+        <button type="submit">Save</button>
+        {{>footer}}
+    </form>
+    </div>
+</body>
+</html>

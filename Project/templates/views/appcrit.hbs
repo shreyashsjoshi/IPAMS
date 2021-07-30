@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <form action="/appcrit" method="POST">
+    {{>header}}
+    {{>navbar}}
+        <div class="a">
+        <h2>Application Criticality </h2>
+            <label for="appcritid">Application Criticality ID:-</label>
+            <input type="text" name="appcritid" id="appcritid"><br>
+            <label for="appcritname">Application Criticality Name:-</label>
+            <input type="text" name="appcritname" id="appcritname"><br>
+            <label for="appcritnote">Application Criticality Note :-</label>
+            <input type="text" name="appcritnote" id="appcritnote"><br>
+            <label for="date">Date:-</label>
+            <input type="text" name="date" id="date"><br>
+            <label for="delete">Delete:-</label>
+            <input type="text" name="delete" id="delete"><br>
+            <button type="submit">Save</button>
+    {{>footer}}
+    </form>
+        </div>
+</body>
+</html>
