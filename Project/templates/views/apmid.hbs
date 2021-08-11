@@ -14,22 +14,22 @@
         <form action="/apmid" method="POST">
     <h2>Welcome to the APMID</h2>
         <label for="apmuuid">APMUUID:-</label>
-        <input type="text" name="apmuuid" id="apmuuid"><br>
+        <input type="text" name="apmuuid" id="apmuuid" required><br>
         
         <label for="apmid">Enter the APM ID:-</label>
-        <input type="text" name="apmid" id="apmid"><br>
+        <input type="text" name="apmid" id="apmid" required><br>
         
         <label for="appname">Application Name:-</label>
-        <input type="text" name="appname" id="appname"><br>
+        <input type="text" name="appname" id="appname" required><br>
 
         <label for="appnotes">Notes:-</label>
-        <input type="text" name="appnotes" id="appnotes"><br>
+        <input type="text" name="appnotes" id="appnotes" required><br>
 
-        <label for="date">Date:-</label>
-        <input type="text" name="date" id="date"><br>
+        {{!-- <label for="date">Date:-</label>
+        <input type="text" name="date" id="date" required><br>
         
         <label for="delete">Delete:-</label>
-        <input type="text" name="delete" id="delete"><br>
+        <input type="text" name="delete" id="delete"><br> --}}
 
         <button type="submit">Save</button>
     {{>footer}}

@@ -12,20 +12,29 @@
         {{>header}}
         {{>navbar}}
         <h2>Security Group</h2>
+
     <form action="/security" method="POST">
-    <label for="SGID">Security Group ID:-</label>
-    <input type="text" name="sgid" id="sgid"><br>
-    <label for="SGN">Security Group Name:-</label>
-    <input type="text" name="sgn" id="sgn"><br>
-    <label for="Notes">Notes:-</label>
-    <input type="text" name="notes" id="notes"><br>
-    <label for="sdate">Start Date:-</label>
-    <input type="text" name="sdate" id="sdate"><br>
-    <label for="edate">End Date:-</label>
-    <input type="text" name="edate" id="edate"><br>
-    <label for="delete">Delete:-</label>
-    <input type="text" name="delete" id="delete"><br>
-    <button type="submit">Save</button>
+
+        {{!-- <label for="SGID">Security Group ID:-</label>
+        <input type="text" name="sgid" id="sgid"><br> --}}
+
+        <label for="SGN">Security Group Name:-</label>
+        <input type="text" name="sgn" id="sgn" required><br>
+
+        <label for="Notes">Notes:-</label>
+        <input type="text" name="notes" id="notes" required><br>
+
+        <label for="sdate">Start Date:-</label>
+        <input type="text" name="sdate" id="sdate" required><br>
+
+        <label for="edate">End Date:-</label>
+        <input type="text" name="edate" id="edate" required><br>
+
+        {{!-- <label for="delete">Delete:-</label>
+        <input type="text" name="delete" id="delete" required><br> --}}
+
+        <button type="submit">Save</button>
+
     </form>
     {{>footer}}
     </div>    

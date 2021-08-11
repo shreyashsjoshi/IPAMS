@@ -4,6 +4,8 @@ const hbs = require("hbs");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const port = process.env.PORT   ||  2000;
+const jwt = require("jsonwebtoken");
+const start = Math.floor(Date.now()/1000);
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
@@ -51,8 +53,12 @@ app.post("/login", async (req, res) => {
             const password = req.body.pass;
 
             const usermail = await Register.findOne({email:email});    
-            if(usermail.pass === password){
+            const isMatch = bcrypt.compare(password, usermail.password);
+
+            if(isMatch){
                 res.status(201).render("logged");
+                console.log(password);
+                console.log(isMatch);
                 }else{
                     res.send("Invalid login ID or Password");
                 }
@@ -89,10 +95,13 @@ app.post("/regions",async (req, res) => {
         postaladdress : req.body.postaladdress,
         notes : req.body.notes,
         version : req.body.version,
-        delete : req.body.delete
+        delete : req.body.delete,
+        date : start
+        
     })
         const area = await place.save();
         res.status(201).render("index")
+        console.log(start);
     }catch(error){
         res.status(400).send(error);
     }
@@ -276,6 +285,13 @@ app.post("/register", async (req, res) =>{
                 pass : req.body.pass,
                 rpass : req.body.rpass
             })
+
+// password hashing will happen in between this section 
+    console.log("the success part" + registerEmp);
+    
+    const token = await registerEmp.generateAuthToken();
+    console.log("the token part" + token);
+
                 const register = await registerEmp.save();
                 res.status(201).render("index")
         }

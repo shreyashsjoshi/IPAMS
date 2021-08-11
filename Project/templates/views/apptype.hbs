@@ -13,16 +13,19 @@
         {{>navbar}}
         <h2>Application Type</h2>
     <form action="/apptype" method="POST">
-        <label for="appid">Application Type ID :- </label>
-        <input type="text" name="atid" id="atid"><br>
+        {{!-- <label for="appid">Application Type ID :- </label>
+        <input type="text" name="atid" id="atid"><br> --}}
         <label for="appname">Application Type Name:-</label>
-        <input type="text" name="atname" id="atname"><br>
+        <input type="text" name="atname" id="atname" required><br>
+
         <label for="appnote">Application Note</label>
-        <input type="text" name="atnote" id="atnote"><br>
+        <input type="text" name="atnote" id="atnote" required><br>
+
         <label for="date">Date:-</label>
-        <input type="text" name="date" id="date"><br>
+        <input type="text" name="date" id="date" required><br>
         <label for="delete">Delete:-</label>
-        <input type="text" name="delete" id="delete"><br>
+        
+        <input type="text" name="delete" id="delete" required><br>
         <button type="submit">Save</button>
         {{>footer}}
     </form>

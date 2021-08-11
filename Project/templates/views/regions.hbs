@@ -8,25 +8,39 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-            <div class="a">
+            <div class="a" data-error="Please enter valid details">
         {{>header}}
         {{>navbar}}
-        <h2>Regions</h2>
-    <form action="/regions" method="POST">
-        <label for="Region">Please enter Region ID:-</label>
-        <input type="text" id="protocol" name ="regionid"><br>
-        <label for="Region">Please enter Region:-</label>
-        <input type="text" id="protocol" name ="region"><br>
-        <label for="Region">Please enter PostalAddress:-</label>
-        <input type="text" id="protocol" name ="postaladdress"><br>
+            <h2>Regions</h2>
+        <form action="/regions" method="POST">
+            {{!-- <label for="Region">Select Region ID:-</label>
+            <input type="text" id="protocol" name ="regionid"><br> --}}
+        
+        <label for="Region">Select Region:-</label>
+            <select id="protocol" name="region">
+                <option value="Pune">Select Region</option>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+            </select><br>
+    
+        {{!-- <input type="list" id="protocol" name ="region"><br> --}}
+        <label for="Region">PostalAddress:-</label>
+        <input type="text" id="protocol" name ="postaladdress" required><br>
+        
         <label for="Region">Notes:-</label>
-        <input type="text" id="protocol" name ="notes"><br>
-        <label for="Region">Date:-</label>
-        <input type="text" id="protocol" name ="date"><br>
+        <input type="text" id="protocol" name ="notes" required><br>
+        
+        {{!-- <label for="Region">Date:-</label>
+        <input type="text" id="protocol" name ="date"><br> --}}
+        
         <label for="Region">Version:-</label>
-        <input type="text" id="protocol" name ="version"><br>
-        <label for="Region">Delete:-</label>
-        <input type="text" id="protocol" name ="delete"><br>
+        <input type="text" id="protocol" name ="version" required><br>
+        
+        {{!-- <label for="Region">Delete:-</label>
+        <input type="text" id="protocol" name ="delete"><br> --}}
+        
         <button type="submit">Save</button>        
 
     </form>
