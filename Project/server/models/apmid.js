@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const ApmSchema = new mongoose.Schema({
+    //apmuuid will be auto generated for each security group entry
     apmuuid : {
         type:Number
     },

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const RegionSchema = new mongoose.Schema({
+    //regionID will be auto generated when region is entered
     regionid:{
         type : Number
 

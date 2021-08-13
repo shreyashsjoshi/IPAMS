@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
+        //ipamid will be auto generated for each security group entry
         ipamid : {
             type : Number
         },

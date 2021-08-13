@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const CritSchema = new mongoose.Schema({
+        // appcritid will be auto generated for each security group entry
         appcritid : {
             type : Number
         },
