@@ -9,35 +9,45 @@
 </head>
 <body>
     <div class="a">
+
         {{>header}}
         {{>navbar}}
+    
     <div class="form-group">
+    
     <form action="/register" method="POST">
         <h2>Please register to login</h2>
         </div>
+    
     <div class="form-group"><br>
     <label for="name">Name:-</label>
     <input type="text" id="User" name="fname" required><br>
     </div>
+    
     <div class="form-group"><br>
     <label for="lastname">Last Name:-</label>
     <input type="text" id="userL" name="lastname" required><br>
     </div>
+    
     <div class="form-group"><br>
     <label for="email">Email:-</label>
     <input type="email" id="mail" name="email" required><br>
     </div>
+    
     <div class="form-group"><br>
     <label for="password">Password:-</label>
     <input type="password" id="pwd" name="pass" required><br>
     </div>
+    
     <div class="form-group"><br>
     <label for="password">Confirm Password:-</label>
     <input type="password" id="rpwd" name="rpass" required><br>
     </div>
+    
     <div class="form-group"><br>
     <button type="submit" class="btn btn-primary">SUBMIT</button>
     </div>
+
 </form>
     
         {{>footer}}

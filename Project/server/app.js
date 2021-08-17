@@ -16,15 +16,13 @@ const Crit = require("./models/applicationcrit");
 const Apm = require("./models/apmid");
 const AppOwn = require("./models/appowner");
 const Usetable = require("./models/usertable");
-
 // const AppTable = require("./models/apptable");
-
-
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
 const partials_path = path.join(__dirname,"../templates/partials");
 
+app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(static_path));
 app.set("view engine","hbs");
@@ -45,6 +43,31 @@ app.get("/login",(req,res) => {
 app.get("/logged",(req,res) => {
     res.render("logged");
 })
+
+//logged user
+
+app.get("/user",(req, res) => {
+    res.render("user");
+})
+
+app.post("/user",async (req, res) =>{
+    try{
+        const regiIp = new Ipadd({
+        ipadders : req.body.ipadders,
+        appown : req.body.appown,
+        appcrit : req.body.appcrit,
+        region : req.body.region,
+        name : req.body.name,
+        email : req.body.email
+    })
+        const ipadd = await regiIp.save();
+        res.status(201).render("/user");
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+})
+
 
 //to login the user
 app.post("/login", async (req, res) => {
@@ -69,24 +92,34 @@ app.post("/login", async (req, res) => {
 })
 
 //to store the IP address in the DB
-app.post("/logged",async (req, res) => {
-    try{
-        const regiIp = new Ipadd({
-        ipadders : req.body.ipadders,
-        sub : req.body.sub
-    })
-        const ipadd = await regiIp.save();
-        res.status(201).render("index")
-    }catch(error){
-        res.status(400).send(error);
-    }
-})
+// app.post("/logged",async (req, res) => {
+//     try{
+//         const regiIp = new Ipadd({
+//         ipadders : req.body.ipadders,
+//         sub : req.body.sub
+//     })
+//         const ipadd = await regiIp.save();
+//         res.status(201).render("index")
+//     }catch(error){
+//         res.status(400).send(error);
+//     }
+// })
 
-app.get("/regions",(req, res) =>{
-    res.render("regions");
-})
 
 // to save regions
+app.get("/regions", async(req, res) =>{
+    try{
+
+    const kuthe = await Register.find();
+//    res.send(kuthe);
+    res.render("regions");
+    }catch(e){
+        res.status(400).send(e);
+    }
+
+})
+
+
 app.post("/regions",async (req, res) => {
     try{
         const place = new Area({
@@ -120,7 +153,7 @@ app.post("/security", async (req, res) => {
             sgid : req.body.sgid,
             sgn : req.body.sgn, 
             notes : req.body.notes,
-            sdate : req.body.sdate,
+            sdate : start,
             edate : req.body.edate,
             delete : req.body.delete
 
@@ -147,7 +180,7 @@ app.post("/apptype", async (req, res) => {
                 atip : req.body.atid,
                 atname : req.body.atname,
                 atnote : req.body.atnote,
-                date : req.body.date,
+                date : start,
                 delete : req.body.delete
         })
             const apps = await appli.save();
@@ -172,7 +205,7 @@ app.post("/appcrit",async (req, res) => {
             appcritid : req.body.appcritid,
             appcritname : req.body.appcritname,
             appcritnote : req.body.appcritnote,
-            date : req.body.date,
+            date : start,
             delete : req.body.delete
         })
         const crit = await criti.save();
@@ -199,7 +232,7 @@ app.post("/apmid", async (req, res) => {
             apmid : req.body.apmid,
             appname : req.body.appname,
             appnotes : req.body.appnotes,
-            date : req.body.date,
+            date : start,
             delete : req.body.delete
 
         })        
@@ -228,7 +261,7 @@ app.post("/appowner",async (req, res) => {
                 appfname : req.body.appfname,
                 applname : req.body.applname,
                 appcrit : req.body.appcrit,
-                date : req.body.date,
+                date : start,
                 delete : req.body.delete
             })
             const appown = await own.save();
@@ -255,7 +288,7 @@ app.post("/users",async (req, res) => {
                 utype : req.body.utype,
                 upri : req.body.upri,
                 notes : req.body.notes,
-                date : req.body.date,
+                date : start,
                 delete : req.body.delete
             })
             const usetable = await useit.save();
@@ -287,10 +320,10 @@ app.post("/register", async (req, res) =>{
             })
 
 // password hashing will happen in between this section 
-    console.log("the success part" + registerEmp);
+//    console.log("the success part" + registerEmp);
     
     const token = await registerEmp.generateAuthToken();
-    console.log("the token part" + token);
+//    console.log("the token part" + token);
 
                 const register = await registerEmp.save();
                 res.status(201).render("index")

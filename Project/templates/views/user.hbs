@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+        
+        {{>header}}
+        {{>navbar}}
+
+    <div class="a">
+    <div class="form-action">
+
+     <form action="/user" method="POST">
+        <h2>Enter the below details</h2>
+        </div>
+    <label for="name">Full Name:-</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:-</label>
+    <input type="text" id="email" name="email" required><br>
+
+    <label for="ipadd">IP Address:-</label>
+        <input type="text" id="ipcon" name="ipadders" required><br>
+    
+    
+    <label for="Region">Region:-</label>
+        <select name="region" id="protocol" required>
+            <option value="">Select Region</option>
+            <option value="Pune">Pune</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Delhi">Delhi</option>
+        </select><br>
+
+
+
+
+    <button type="submit">Submit</button>
+    
+
+        {{>footer}}
+    </div>
+    </form>
+</body>
+</html>
