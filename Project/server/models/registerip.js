@@ -26,7 +26,7 @@ const InternetSchema = new mongoose.Schema({
     }
 })
 
-const Ipadd = new mongoose.model("ipadrs", InternetSchema);
+const Ipadd = new mongoose.model("ipadders", InternetSchema);
 
 module.exports = Ipadd;
 

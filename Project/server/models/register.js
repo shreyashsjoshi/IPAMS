@@ -39,11 +39,12 @@ const EmployeeSchema = new mongoose.Schema({
 //generating tokens
 EmployeeSchema.methods.generateAuthToken = async function(){
 try{
+        console.log(this._id);
         const token = jwt.sign({_id:this._id.toString()}, "mynameisshreyashjoshiassociateconsultant");
-        this.tokens = this.tokens.concate({token:token})
+        this.tokens = this.tokens.concat({token:token})
         await this.save();
         return token;
-        console.log(token);
+        
     } catch(error){
         res.status(400).send("the error part" + error);
         console.log("the error part", + error);
@@ -56,23 +57,16 @@ try{
 EmployeeSchema.pre("save", async function(next) {
 
     if(this.isModified("pass")){
-    //    const passwordHash = await bcrypt.hash(passsword, 10);   
-//      console.log(`The current password is ${this.pass}`);
-    this.pass = await bcrypt.hash(this.pass, 10);
-//      console.log(`The current password is ${this.pass}`);
-    this.rpass = undefined;
 
-    }
+    this.pass = await bcrypt.hash(this.pass, 10);
+    this.rpass = await bcrypt.hash(this.pass, 10);
+
+    }      
         next();
 })
-
-
-
 
 //To create a collections
 
 const Register = new mongoose.model("users", EmployeeSchema);   
 
-
 module.exports = Register;
-

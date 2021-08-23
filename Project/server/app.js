@@ -1,10 +1,13 @@
+//updated 05:12pm 23-08-2021
+
 const express = require("express");
 const app = express();
 const hbs = require("hbs");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const port = process.env.PORT   ||  2000;
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");  
+
 const start = Math.floor(Date.now()/1000);
 
 const Register = require("./models/register");
@@ -40,19 +43,25 @@ app.get("/login",(req,res) => {
 
 })
 
-app.get("/logged",(req,res) => {
+app.get("/logged",async (req,res) => {
+    const gettit = await Message.aggregate([
+        {$match:{}}
+    ])
+
     res.render("logged");
 })
 
 //logged user
 
 app.get("/user",(req, res) => {
+
     res.render("user");
 })
 
 app.post("/user",async (req, res) =>{
     try{
         const regiIp = new Ipadd({
+
         ipadders : req.body.ipadders,
         appown : req.body.appown,
         appcrit : req.body.appcrit,
@@ -60,32 +69,56 @@ app.post("/user",async (req, res) =>{
         name : req.body.name,
         email : req.body.email
     })
+
         const ipadd = await regiIp.save();
         res.status(201).render("/user");
+
     }catch(error){  
         res.status(400).send("Connection not established");
     }
 
 })
 
+//admin login
 
-//to login the user
-app.post("/login", async (req, res) => {
+
+app.get("/admin",(req, res) => {
+    res.render("admin");
+})
+
+
+app.post("/admin",(req, res) =>{
     try{
+
+    }catch(error){
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+
+//to login the user 
+app.post("/login", async (req, res) => {
+        try{
             const email = req.body.email;
             const password = req.body.pass;
 
-            const usermail = await Register.findOne({email:email});    
-            const isMatch = bcrypt.compare(password, usermail.password);
+            const useremail = await Register.findOne({email:email});    
+            const isMatch = bcrypt.compare(password, useremail.password);
+            const token = await useremail.generateAuthToken();
 
-            if(isMatch){
+            console.log("the token part" + token);
+
+
+        if(isMatch){
                 res.status(201).render("logged");
-                console.log(password);
-                console.log(isMatch);
-                }else{
-                    res.send("Invalid login ID or Password");
-                }
-        }catch (error){
+//                console.log(password);
+//                console.log(isMatch);
+            }else{
+                res.send("Invalid login ID or Password");
+            }
+        }
+        catch (error){
         res.status(400).send("Connection not established");
     }
     
@@ -320,20 +353,35 @@ app.post("/register", async (req, res) =>{
             })
 
 // password hashing will happen in between this section 
-//    console.log("the success part" + registerEmp);
+    console.log("the success part" + registerEmp);
     
     const token = await registerEmp.generateAuthToken();
-//    console.log("the token part" + token);
+    console.log("the token part" + token);
 
-                const register = await registerEmp.save();
-                res.status(201).render("index")
+    const register = await registerEmp.save();
+    res.status(201).render("index")
         }
     }   
+    
     catch(error){
         res.status(400).send(error);
     }
 
 })
+
+
+// const createToken = async() => {
+//     const token = await jwt.sign({_id:"610cdae5363d071e58a83a9e"}, "mynameisshreyashjoshiassociateconsultant",{
+//     expiresIn:"2 minutes"           
+//     });
+//     console.log(token);
+    
+//     const userVer = jwt.verify(token,"mynameisshreyashjoshiassociateconsultant")
+//     console.log(userVer);
+
+// }
+
+// createToken();
 
 app.listen(port,() =>{
 
