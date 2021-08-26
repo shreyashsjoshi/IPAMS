@@ -7,7 +7,7 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 const port = process.env.PORT   ||  2000;
 const jwt = require("jsonwebtoken");  
-
+const mongo = require('mongodb');
 const start = Math.floor(Date.now()/1000);
 
 const Register = require("./models/register");
@@ -58,20 +58,16 @@ app.get("/user",(req, res) => {
     res.render("user");
 })
 
-app.post("/user",async (req, res) =>{
+app.post("/user",async (req, res) => {
+
     try{
-        const regiIp = new Ipadd({
+            const useme = new UseTable({
+                name:req.body.name,
+                email:req.body.email
+})
 
-        ipadders : req.body.ipadders,
-        appown : req.body.appown,
-        appcrit : req.body.appcrit,
-        region : req.body.region,
-        name : req.body.name,
-        email : req.body.email
-    })
-
-        const ipadd = await regiIp.save();
-        res.status(201).render("/user");
+           const usetable = await useme.save();
+           res.status(201).render("/user");
 
     }catch(error){  
         res.status(400).send("Connection not established");
@@ -140,17 +136,44 @@ app.post("/login", async (req, res) => {
 
 
 // to save regions
-app.get("/regions", async(req, res) =>{
-    try{
+app.get("/regions", function(req, res) {
+    
+            Register.find(req.params).then(function(err, register){
+        
+                if(err)
+                {
+                    res.status(400).send(err);
+                }
+               
+                //res.json(activity);
+                res.render(register);
+            })
+    })
 
-    const kuthe = await Register.find();
-//    res.send(kuthe);
-    res.render("regions");
-    }catch(e){
-        res.status(400).send(e);
-    }
 
-})
+    // app.get("/regions", async(req, res) => {
+    //     try{
+    
+    //         const kuthe = await Register.findOne(name);
+        
+    //             Register.findById(req.params.name).then(function(err, register){
+            
+    //                 if(err)
+    //                 {
+    //                     res.send(kuthe);
+    //                     res.render("regions");
+    //                 }
+                   
+    //                 catch(e)
+    //                 {
+    //                     res.status(400).send(e);
+    //                 }
+    
+    //             })
+    //     })
+
+
+
 
 
 app.post("/regions",async (req, res) => {
