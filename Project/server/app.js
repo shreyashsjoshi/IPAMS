@@ -1,4 +1,4 @@
-//updated 04:50pm 26-08-21
+//updated 04:30pm 30-08-21
 
 const express = require("express");
 const app = express();
@@ -43,6 +43,50 @@ app.get("/login",(req,res) => {
 
 })
 
+//first page post user login
+app.get("/first",(req,res) => {
+    res.render("first");
+})
+
+app.post("/first",async (req, res) => {
+
+    try{
+            const where = new Area
+            ({
+                region:req.body.region,
+                postal:req.body.postal
+            })
+
+           const area = await where.save();
+           res.status(201).render("/second");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+
+//second page
+app.get("/second",(req,res) => {
+    res.render("second");
+})
+
+app.get("/third",(req,res) => {
+    res.render("third");
+})
+
+app.get("/fourth",(req,res) => {
+    res.render("fourth");
+})
+
+app.get("/fifth",(req,res) => {
+    res.render("fifth");
+})
+
+app.get("/sixth",(req,res) => {
+    res.render("sixth");
+})
 app.get("/logged",async (req,res) => {
     const gettit = await Message.aggregate([
         {$match:{}}
