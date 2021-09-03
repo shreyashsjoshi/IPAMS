@@ -5,10 +5,13 @@ const SecuritySchema = new mongoose.Schema({
         sgid : {
             type : Number
         },
+        ipadrs : {
+            type : String
+        },
         sgn : {
             type : String
         },
-        notes : {
+        sgnote : {
             type: String
         },
         sdate : {

@@ -6,6 +6,9 @@ h1{
 h2{
     color: orange;
 }
+h3{
+    color: greenyellow;
+}
 div.a {
     text-align: center;
     font-family: 'Monserrat', sans-serif;

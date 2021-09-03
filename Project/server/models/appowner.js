@@ -11,14 +11,15 @@ const OwnSchema = new mongoose.Schema({
         apptelephone : {
             type:Number
         },
-        appfname : {
-            type:String
-        },
-        applname : {
+        apponame : {
             type:String
         },
         appcrit : {
             type:String
+        },
+
+        appnote :{
+            type : String
         },
         date : {
             type: String

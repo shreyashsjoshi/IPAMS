@@ -8,26 +8,26 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="a">
+    <form action="/seventh" method="POST">
     {{>header}}
     {{>navbar}}
-    <div class="a">
-    <form action="/fifth">
     <h2>IPAM by Smartedge</h2>
-    
-    <br>
-    <label for="appcritname">Application Criticality:-</label>
-    <input type="text" id="appcritname" name="appcritname" placeholder="Criticality type" required><br>
 
     <br>
-    <label for="appcritnote">Note:-</label>
-    <input type="text" id="appcritnote" name="appcritnote"><br>
-    <br>        
-        
-    <br>
-    <button type="submit">NEXT</button>
+    <label for="apmid">APMID:-</label>
+    <input type="text" id="apmid" name="apmid" required><br>
 
+
+    <br>
+    <label for="apmnote">Note:-</label>
+    <input type="text" id="apmnote" name="apmnote"><br>
+
+    <br>
+    <button type="submit">SUBMIT</button>
+
+    {{>footer}}
     </form>
     </div>
-    {{>footer}}    
 </body>
 </html>

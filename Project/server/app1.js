@@ -1,4 +1,4 @@
-//updated 04:30pm 30-08-21
+//updated 04:55pm 03-09-21
 
 const express = require("express");
 const app = express();
@@ -19,11 +19,12 @@ const Crit = require("./models/applicationcrit");
 const Apm = require("./models/apmid");
 const AppOwn = require("./models/appowner");
 const Usetable = require("./models/usertable");
-// const AppTable = require("./models/apptable");
+const Appwhich = require("./models/apptable");
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
 const partials_path = path.join(__dirname,"../templates/partials");
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -31,9 +32,9 @@ app.use(express.static(static_path));
 app.set("view engine","hbs");
 app.set("views",template_path);
 hbs.registerPartials(partials_path);
-
 require("./db/connection");
 
+//home url
 app.get("/",(req,res) => {
     res.render("index");
 })
@@ -58,7 +59,7 @@ app.post("/first",async (req, res) => {
             })
 
            const area = await where.save();
-           res.status(201).render("/second");
+           res.status(201).render("second");
 
     }catch(error){  
         res.status(400).send("Connection not established");
@@ -67,29 +68,71 @@ app.post("/first",async (req, res) => {
 })
 
 
-//second page
-app.get("/second",(req,res) => {
-    res.render("second");
-})
+//logged in pages
 
 app.get("/third",(req,res) => {
     res.render("third");
+})
+
+app.post("/third",async (req,res) =>{
+    try{
+        const appt = new Apps
+        ({
+        atname : req.body.atname,
+        atnote : req.body.atnote,
+        date : start
+        })
+        
+        const apps = await appt.save();
+        res.status(201).render("fourth")
+    }
+    catch(err){
+        res.status(400).send("connection not established");
+    }
+
 })
 
 app.get("/fourth",(req,res) => {
     res.render("fourth");
 })
 
-app.get("/fifth",(req,res) => {
-    res.render("fifth");
-})
+app.post("/fourth",async (req,res) => {
+    try
+    {
+        const appw = new Appwhich 
+        ({
+            appn : req.body.appn,
+            appnote : req.body.appnote,
+            date : start
+        }) 
+        const appwhich = await appw.save();
+        res.status(201).render("fifth");
+    }
+    catch(err){
+        res.status(400).send("Connection not established");
+    }
 
+})
 app.get("/sixth",(req,res) => {
     res.render("sixth");
 })
 
-app.get("/seventh",(req,res) => {
-    res.render("seventh");
+app.post("/sixth", async (req, res) => {
+    try{
+        const own = new AppOwn({
+            appownermail : req.body.appownermail,
+            apponame : req.body.apponame,
+            apptelephone : req.body.apptelephone,
+            appnote : req.body.appnote,
+            date : start
+        })
+        const appown = await own.save();
+        res.status(201).render("seventh");
+    }
+    catch(err){
+        res.status(400).send("Connection not established");
+    }
+
 })
 
 app.get("/logged",async (req,res) => {
@@ -142,46 +185,6 @@ app.post("/admin",(req, res) =>{
 })
 
 
-//to login the user 
-app.post("/login", async (req, res) => {
-        try{
-            const email = req.body.email;
-            const password = req.body.pass;
-
-            const useremail = await Register.findOne({email:email});    
-            const isMatch = bcrypt.compare(password, useremail.password);
-            const token = await useremail.generateAuthToken();
-
-            console.log("the token part" + token);
-
-
-        if(isMatch){
-                res.status(201).render("logged");
-//                console.log(password);
-//                console.log(isMatch);
-            }else{
-                res.send("Invalid login ID or Password");
-            }
-        }
-        catch (error){
-        res.status(400).send("Connection not established");
-    }
-    
-})
-
-//to store the IP address in the DB
-// app.post("/logged",async (req, res) => {
-//     try{
-//         const regiIp = new Ipadd({
-//         ipadders : req.body.ipadders,
-//         sub : req.body.sub
-//     })
-//         const ipadd = await regiIp.save();
-//         res.status(201).render("index")
-//     }catch(error){
-//         res.status(400).send(error);
-//     }
-// })
 
 
 // to save regions
@@ -247,24 +250,22 @@ app.post("/regions",async (req, res) => {
 
 // to set the security group table details
 
-app.get("/security", (req, res) => {
-        res.render("security");
+app.get("/second", (req, res) => {
+        res.render("second");
 })
 
 
-app.post("/security", async (req, res) => {
+app.post("/second", async (req, res) => {
     try{
         const secGT = new Sec({
-            sgid : req.body.sgid,
+            ipadrs : req.body.ipadrs,
             sgn : req.body.sgn, 
-            notes : req.body.notes,
+            sgnote : req.body.sgnote,
             sdate : start,
-            edate : req.body.edate,
-            delete : req.body.delete
-
         })
+
             const sec = await secGT.save();
-            res.status(201).render("index")
+            res.status(201).render("third")
     }catch(error){
         res.status(400).send(error);
 
@@ -299,22 +300,21 @@ app.post("/apptype", async (req, res) => {
 
 //to set the application criticality
 
-app.get("/appcrit",(req, res) => {
-    res.render("appcrit");
+app.get("/fifth",(req, res) => {
+    res.render("fifth");
 
 })
 
-app.post("/appcrit",async (req, res) => {
+app.post("/fifth",async (req, res) => {
     try{
         const criti = new Crit({
-            appcritid : req.body.appcritid,
+
             appcritname : req.body.appcritname,
             appcritnote : req.body.appcritnote,
-            date : start,
-            delete : req.body.delete
+            date : start
         })
         const crit = await criti.save();
-        res.status(201).render("index");
+        res.status(201).render("sixth");
 
     }catch(error)
     {
@@ -325,21 +325,19 @@ app.post("/appcrit",async (req, res) => {
 
 //for APMID table
 
-app.get("/apmid",(req, res) =>{
-    res.render("apmid");
+app.get("/seventh",(req,res) => {
+    res.render("seventh");
+//    res.send(Apm);
 })
 
-
-app.post("/apmid", async (req, res) => {
+app.post("/seventh", async (req, res) => {
     try{
         const apmid = new Apm({
-            apmuuid : req.body.apmuuid,
-            apmid : req.body.apmid,
-            appname : req.body.appname,
-            appnotes : req.body.appnotes,
-            date : start,
-            delete : req.body.delete
 
+            apmid : req.body.apmid,
+//ask shekhar            appname : req.body.appname,
+            appnotes : req.body.apmnote,
+            date : start
         })        
         const apm = await apmid.save();
         res.status(201).render("index");
@@ -350,12 +348,7 @@ app.post("/apmid", async (req, res) => {
 
 })
 
-//app owner table
 
-app.get("/appowner",(req, res) => {
-        res.render("appowner");
-
-})
 
 app.post("/appowner",async (req, res) => {
         try{
@@ -404,6 +397,54 @@ app.post("/users",async (req, res) => {
         }
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//to login the user 
+app.post("/login", async (req, res) => {
+    try{
+        const email = req.body.email;
+        const password = req.body.pass;
+
+        const useremail = await Register.findOne({email:email});    
+        const isMatch = bcrypt.compare(password, useremail.password);
+        const token = await useremail.generateAuthToken();
+
+        console.log("the token part" + token);
+
+
+    if(isMatch){
+            res.status(201).render("logged");
+//                console.log(password);
+//                console.log(isMatch);
+        }else{
+            res.send("Invalid login ID or Password");
+        }
+    }
+    catch (error){
+    res.status(400).send("Connection not established");
+}
+
+})
+
 //to register the users into the DB
 
 app.get("/register",(req,res) => {
@@ -425,36 +466,23 @@ app.post("/register", async (req, res) =>{
             })
 
 // password hashing will happen in between this section 
-    console.log("the success part" + registerEmp);
+            console.log("the success part" + registerEmp);
     
-    const token = await registerEmp.generateAuthToken();
-    console.log("the token part" + token);
+            const token = await registerEmp.generateAuthToken();
+            console.log("the token part" + token);
 
-    const register = await registerEmp.save();
-    res.status(201).render("index")
+            const register = await registerEmp.save();
+            res.status(201).render("index")
         }
     }   
     
     catch(error){
-        res.status(400).send(error);
-    }
+            res.status(400).send(error);
+        }
 
 })
 
-
-// const createToken = async() => {
-//     const token = await jwt.sign({_id:"610cdae5363d071e58a83a9e"}, "mynameisshreyashjoshiassociateconsultant",{
-//     expiresIn:"2 minutes"           
-//     });
-//     console.log(token);
-    
-//     const userVer = jwt.verify(token,"mynameisshreyashjoshiassociateconsultant")
-//     console.log(userVer);
-
-// }
-
-// createToken();
-
+//server
 app.listen(port,() =>{
 
     console.log(`The server is running on port ${port}`);

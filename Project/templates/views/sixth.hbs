@@ -12,16 +12,22 @@
     {{>navbar}}
     <div class="a">
     <form action="/sixth" method="POST">
-    <h2>IPAM by SmartEdge</h2>    
+    <h2>IPAM by Smartedge</h2>    
+
+    <label for="appownermail">Owner Mail ID:-</label>
+    <input type="email" id="appownermail" name="appownermail" placeholder="Application Owner" required><br>
+
+    <br>    
+    <label for="apponame">Owner Name:-</label>
+    <input type="text" id="apponame" name="apponame" placeholder="Application owner full name" required><br>
 
     <br>
-    <label for="app">Application Criticality:-</label>
-    <input type="text" id="app" name="app" placeholder="Criticality type" required><br>
+    <label for="apptelephone">Owner Contact:-</label>
+    <input type="text" id="apptelephone" name="apptelephone" placeholder="Application owner Phone number" required><br>
 
     <br>
     <label for="appnote">Note:-</label>
-    <input type="text" id="appnote" name="appnote"><br>
-    <br>    
+    <input type="text" id="appnote" name="appnote"><br>  
 
     <br>
     <button type="submit">NEXT</button>   

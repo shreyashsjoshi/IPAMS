@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
 
-const AppTableSchema = new mongoose.Schema({
+const AppwhichSchema = new mongoose.Schema({
+    appn : {
+    type : String
+    },
 
-
-    
+    appnote : {
+        type : String
+    },
+    date :{
+        type : String
+    }
 
 })
 
 
-const AppTable = new mongoose.model("", AppTableSchema);
+const Appwhich = new mongoose.model("application", AppwhichSchema);
 
-module.exports= AppTable;
+module.exports= Appwhich;
