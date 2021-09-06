@@ -1,28 +1,28 @@
 const mongoose = require("mongoose");
 
 const RegionSchema = new mongoose.Schema({
-    //regionID will be auto generated when region is entered
+    //region ID will be auto generated when region is entered
+
     regionid:{
         type : Number
 
     },
-    region:{
+    city:{
         type : String
     },
     postaladdress: {
         type : Number,
-        required :true
+        
     },
-    notes : {
+    noteregion : {
         type :  String,
-        required : true
+       
     },
     date : {
         type : Date
     },
     version : {
         type : Number,
-        required : true
     },
 
     delete : {
@@ -32,7 +32,9 @@ const RegionSchema = new mongoose.Schema({
 
 })
 
-const Area = new mongoose.model("where", RegionSchema);
+const Jaaga = new mongoose.model("whereto", RegionSchema);
 
-module.exports = Area;
+
+module.exports = Jaaga;
+
 

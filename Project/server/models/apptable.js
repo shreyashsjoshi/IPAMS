@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
 const AppwhichSchema = new mongoose.Schema({
-    appn : {
+    appnm : {
     type : String
     },
 
-    appnote : {
+    appnoteds : {
         type : String
     },
+
     date :{
         type : String
     }

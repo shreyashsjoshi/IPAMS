@@ -12,7 +12,7 @@ const start = Math.floor(Date.now()/1000);
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
-const Area = require("./models/region");
+const Jaaga = require("./models/place");
 const Sec = require("./models/security");
 const Apps = require("./models/application");
 const Crit = require("./models/applicationcrit");
@@ -20,6 +20,7 @@ const Apm = require("./models/apmid");
 const AppOwn = require("./models/appowner");
 const Usetable = require("./models/usertable");
 const Appwhich = require("./models/apptable");
+const Central = require("./models/central");
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
@@ -37,28 +38,137 @@ require("./db/connection");
 //home url
 app.get("/",(req,res) => {
     res.render("index");
+});
+
+//fetch data
+app.get("/all", (req, res) =>{
+    res.send([1,2,3]);
+})
+app.get("/all/:id",async (req,res) => {
+    res.send(req.params.id);
+    try{
+    const user1 = await Usetable.find({});
+ 
+    const user2 = await Jaaga.find({});
+ 
+    const user3 = await Sec.find({});
+    res.send(user1).send(user2);
+    res.send(user3); 
+
+}
+catch(e){
+    res.status(400).send("Connection not established");
+}
 })
 
+//central db
+
+app.get("/enter",async (req, res) => {
+    try{
+    const user100 =  await Central.find({});
+    res.send(user100);
+    }
+    catch(err){
+        res.status(400).send("Connection not established");
+    }
+})
+
+app.post("/enter",async(req, res) =>{
+
+    try{
+        const middle = new Central({
+            ipam : req.body.ipam,
+            region : req.body.region,
+            ipad : req.body.ipad,
+            subnet : req.body.subnet,
+            gateway : req.body.gateway,
+            vlanID : req.body.vlanID,
+            date : start,
+            requestID : req.body.requestID,
+            assigndby : req.body.assigndby,
+            vmname : req.body.vmname,
+            dept : req.body.dept,
+            secgrp : req.body.secgrp,
+            appname : req.body.appname,
+            apptype : req.body.apptype,
+            appown : req.body.appown,
+            appmail : req.body.appmail,
+            comments : req.body.comments,
+            faceapp : req.body.faceapp,
+            aapm : req.body.aapm
+})
+
+       const central = await middle.save();
+       console.log("Data Saved");
+       res.status(201).render("first");
+
+}catch(error){  
+    res.status(400).send("Connection not established");
+}
+
+
+})
+
+// to the user login
 app.get("/login",(req,res) => {
     res.render("login");
 
 })
 
-//first page post user login
-app.get("/first",(req,res) => {
+//post login user details
+app.get("/user",async (req, res) => {
+    res.render("user");
+    try{
+        const user1 = await Usetable.find({});
+        res.send(user1); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
+
+})
+
+app.post("/user",async (req, res) => {
+
+    try{
+            const useme = new Usetable({
+                uname:req.body.uname,
+                email:req.body.email
+})
+
+           const usetable = await useme.save();
+           res.status(201).render("first");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+//first page post user details
+app.get("/first",async (req,res) => {
     res.render("first");
+    try{
+        const user2 = await Jaaga.find({});
+        res.send(user2); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
+
 })
 
 app.post("/first",async (req, res) => {
 
-    try{
-            const where = new Area
-            ({
-                region:req.body.region,
-                postal:req.body.postal
+    try
+    {
+            const field = new Jaaga({
+                city : req.body.city,
+                postaladdress : req.body.postaladdress,
+                noteregion : req.body.noteregion
             })
 
-           const area = await where.save();
+           const jaaga = await field.save();
            res.status(201).render("second");
 
     }catch(error){  
@@ -67,12 +177,52 @@ app.post("/first",async (req, res) => {
 
 })
 
+//second
 
-//logged in pages
-
-app.get("/third",(req,res) => {
-    res.render("third");
+app.get("/second",async (req, res) => {
+    res.render("second");
+    try{
+        const user3 = await Sec.find({});
+        res.send(user3); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
 })
+
+
+app.post("/second", async (req, res) => {
+try{
+    const secGT = new Sec({
+        ipadrs : req.body.ipadrs,
+        sgn : req.body.sgn, 
+        sgnote : req.body.sgnote,
+        sdate : start,
+    })
+
+        const sec = await secGT.save();
+        res.status(201).render("third")
+}catch(error){
+    res.status(400).send(error);
+
+}
+
+})
+
+//third
+
+app.get("/third",async (req,res) => {
+
+    res.render("third");
+    try{
+        const user4 = await Apps.find({});
+        res.send(user4); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
+})
+
 
 app.post("/third",async (req,res) =>{
     try{
@@ -92,19 +242,28 @@ app.post("/third",async (req,res) =>{
 
 })
 
-app.get("/fourth",(req,res) => {
+//fourth
+app.get("/fourth",async (req,res) => {
     res.render("fourth");
+    try{
+        const user5 = await Appwhich.find({});
+        res.send(user5); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
 })
 
 app.post("/fourth",async (req,res) => {
     try
     {
-        const appw = new Appwhich 
-        ({
-            appn : req.body.appn,
-            appnote : req.body.appnote,
+        const appw = new Appwhich({
+
+            appnm : req.body.appnm, 
+            appnoteds : req.body.appnoteds,
             date : start
         }) 
+
         const appwhich = await appw.save();
         res.status(201).render("fifth");
     }
@@ -113,196 +272,18 @@ app.post("/fourth",async (req,res) => {
     }
 
 })
-app.get("/sixth",(req,res) => {
-    res.render("sixth");
-})
 
-app.post("/sixth", async (req, res) => {
-    try{
-        const own = new AppOwn({
-            appownermail : req.body.appownermail,
-            apponame : req.body.apponame,
-            apptelephone : req.body.apptelephone,
-            appnote : req.body.appnote,
-            date : start
-        })
-        const appown = await own.save();
-        res.status(201).render("seventh");
-    }
-    catch(err){
-        res.status(400).send("Connection not established");
-    }
+//fifth
 
-})
-
-app.get("/logged",async (req,res) => {
-    const gettit = await Message.aggregate([
-        {$match:{}}
-    ])
-
-    res.render("logged");
-})
-
-//logged user
-
-app.get("/user",(req, res) => {
-
-    res.render("user");
-})
-
-app.post("/user",async (req, res) => {
-
-    try{
-            const useme = new UseTable({
-                name:req.body.name,
-                email:req.body.email
-})
-
-           const usetable = await useme.save();
-           res.status(201).render("/user");
-
-    }catch(error){  
-        res.status(400).send("Connection not established");
-    }
-
-})
-
-//admin login
-
-
-app.get("/admin",(req, res) => {
-    res.render("admin");
-})
-
-
-app.post("/admin",(req, res) =>{
-    try{
-
-    }catch(error){
-        res.status(400).send("Connection not established");
-    }
-
-})
-
-
-
-
-// to save regions
-app.get("/regions", function(req, res) {
-    
-            Register.find(req.params).then(function(err, register){
-        
-                if(err)
-                {
-                    res.status(400).send(err);
-                }
-               
-                //res.json(activity);
-                res.render(register);
-            })
-    })
-
-
-    // app.get("/regions", async(req, res) => {
-    //     try{
-    
-    //         const kuthe = await Register.findOne(name);
-        
-    //             Register.findById(req.params.name).then(function(err, register){
-            
-    //                 if(err)
-    //                 {
-    //                     res.send(kuthe);
-    //                     res.render("regions");
-    //                 }
-                   
-    //                 catch(e)
-    //                 {
-    //                     res.status(400).send(e);
-    //                 }
-    
-    //             })
-    //     })
-
-
-
-
-
-app.post("/regions",async (req, res) => {
-    try{
-        const place = new Area({
-        regionid : req.body.regionid,
-        region : req.body.region,
-        postaladdress : req.body.postaladdress,
-        notes : req.body.notes,
-        version : req.body.version,
-        delete : req.body.delete,
-        date : start
-        
-    })
-        const area = await place.save();
-        res.status(201).render("index")
-        console.log(start);
-    }catch(error){
-        res.status(400).send(error);
-    }
-})
-
-// to set the security group table details
-
-app.get("/second", (req, res) => {
-        res.render("second");
-})
-
-
-app.post("/second", async (req, res) => {
-    try{
-        const secGT = new Sec({
-            ipadrs : req.body.ipadrs,
-            sgn : req.body.sgn, 
-            sgnote : req.body.sgnote,
-            sdate : start,
-        })
-
-            const sec = await secGT.save();
-            res.status(201).render("third")
-    }catch(error){
-        res.status(400).send(error);
-
-    }
-
-}
-)
-
-//to set the application type table
-
-app.get("/apptype",(req, res) => {
-    res.render("apptype");
-})
-
-app.post("/apptype", async (req, res) => {
-    try{
-        const appli = new Apps({
-                atip : req.body.atid,
-                atname : req.body.atname,
-                atnote : req.body.atnote,
-                date : start,
-                delete : req.body.delete
-        })
-            const apps = await appli.save();
-            res.status(201).render("index");
-    }catch(error){
-        res.status(400).send(error);
-
-    }
-
-})
-
-//to set the application criticality
-
-app.get("/fifth",(req, res) => {
+app.get("/fifth",async (req, res) => {
     res.render("fifth");
-
+    try{
+        const user6 = await Crit.find({});
+        res.send(user6); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
 })
 
 app.post("/fifth",async (req, res) => {
@@ -323,11 +304,47 @@ app.post("/fifth",async (req, res) => {
 
 })
 
-//for APMID table
+//sixth
+app.get("/sixth",async (req,res) => {
+    res.render("sixth");
+    try{
+        const user7 = await AppOwn.find({});
+        res.send(user7); 
+        }
+        catch(e){
+            res.status(400).send("Connection not established");
+        }
+})
 
-app.get("/seventh",(req,res) => {
+app.post("/sixth", async (req, res) => {
+    try{
+        const own = new AppOwn({
+            appownermail : req.body.appownermail,
+            apponame : req.body.apponame,
+            apptelephone : req.body.apptelephone,
+            appnote : req.body.appnote,
+            date : start
+        })
+        const appown = await own.save();
+        res.status(201).render("seventh");
+    }
+    catch(err){
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+//seventh
+
+app.get("/seventh",async (req,res) => {
     res.render("seventh");
-//    res.send(Apm);
+    try{
+    const user8 = await Apm.find({});
+    res.send(user8); 
+    }
+    catch(e){
+        res.status(400).send("Connection not established");
+    }
 })
 
 app.post("/seventh", async (req, res) => {
@@ -350,71 +367,54 @@ app.post("/seventh", async (req, res) => {
 
 
 
-app.post("/appowner",async (req, res) => {
-        try{
-            const own = new AppOwn({
-                appownerid : req.body.appownerid,
-                appownermail : req.body.appownermail,
-                apptelephone : req.body.apptelephone,
-                appfname : req.body.appfname,
-                applname : req.body.applname,
-                appcrit : req.body.appcrit,
-                date : start,
-                delete : req.body.delete
-            })
-            const appown = await own.save();
-            res.status(201).render("index");
+//to check login credentials
+app.get("/logged",async (req,res) => {
+    const gettit = await Message.aggregate([
+        {$match:{}}
+    ])
 
-        }catch(error){
-            res.status(400).send(error);
-        }
-
-})
-
-
-//users table
-
-app.get("/users", (req, res) => {
-    res.render("users");
-})
-
-app.post("/users",async (req, res) => {
-        try{
-            const useit = new Usetable({
-                ipamid : req.body.ipamid,
-                uname : req.body.uname,
-                utype : req.body.utype,
-                upri : req.body.upri,
-                notes : req.body.notes,
-                date : start,
-                delete : req.body.delete
-            })
-            const usetable = await useit.save();
-            res.status(201).render("index");
-
-        }catch(error){
-            res.status(400).send(error);
-        }
+    res.render("logged");
 })
 
 
 
+//admin login
 
 
+app.get("/admin",(req, res) => {
+    res.render("admin");
+})
 
 
+app.post("/admin",(req, res) =>{
+    try{    
+
+    }catch(error){
+        res.status(400).send("Connection not established");
+    }
+
+})
 
 
-
-
-
-
-
-
-
-
-
-
+app.post("/regions",async (req, res) => {
+    try{
+        const place = new Area({
+        regionid : req.body.regionid,
+        region : req.body.region,
+        postaladdress : req.body.postaladdress,
+        notes : req.body.notes,
+        version : req.body.version,
+        delete : req.body.delete,
+        date : start
+        
+    })
+        const area = await place.save();
+        res.status(201).render("index")
+        console.log(start);
+    }catch(error){
+        res.status(400).send(error);
+    }
+})
 
 
 
@@ -432,7 +432,7 @@ app.post("/login", async (req, res) => {
 
 
     if(isMatch){
-            res.status(201).render("logged");
+            res.status(201).render("first");
 //                console.log(password);
 //                console.log(isMatch);
         }else{

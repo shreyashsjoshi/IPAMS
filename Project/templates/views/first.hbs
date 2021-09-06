@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     {{>header}}
     {{>navbar}}
     <form action="/first" method="POST">
@@ -16,8 +15,8 @@
     <h2>IPAM by Smartedge</h2>
     
     <br>
-    <label for="Region">Region:-</label>
-        <select name="region" id="protocol" required>
+    <label for="city">Region:-</label>
+        <select name="city" id="city" required>
             <option value="">Select Region</option>
             <option value="Pune">Pune</option>
             <option value="Mumbai">Mumbai</option>
@@ -27,10 +26,14 @@
         </select>
     <br>
 
+    
     <br>
-    <label for="postal">Postal Adress:-</label>
-    <input type="text" name="postal" id="postal" placeholder="Pincode" required><br>
+    <label for="postaladdress">Postal Adress:-</label>
+    <input type="postaladdress" name="postaladdress" id="postaladdress" placeholder="Pincode" required><br>
     <br>
+
+    <label for="noteregion">Notes:-</label>
+    <input type="text" name="noteregion" id="noteregion" ><br>
 
     <br>
     <button type="submit">NEXT</button>
