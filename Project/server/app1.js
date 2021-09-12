@@ -1,4 +1,4 @@
-//updated 05:16pm 06-09-21
+//updated today
 
 const express = require("express");
 const app = express();
@@ -116,16 +116,9 @@ app.get("/login",(req,res) => {
 })
 
 //post login user details
-app.get("/user",async (req, res) => {
-    res.render("user");
-    try{
-        const user1 = await Usetable.find({});
-        res.send(user1); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
+app.get("/user",(req, res) => {
 
+    res.render("user");
 })
 
 app.post("/user",async (req, res) => {
@@ -146,16 +139,8 @@ app.post("/user",async (req, res) => {
 })
 
 //first page post user details
-app.get("/first",async (req,res) => {
+app.get("/first",(req,res) => {
     res.render("first");
-    try{
-        const user2 = await Jaaga.find({});
-        res.send(user2); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
-
 })
 
 app.post("/first",async (req, res) => {
@@ -179,15 +164,8 @@ app.post("/first",async (req, res) => {
 
 //second
 
-app.get("/second",async (req, res) => {
+app.get("/second", (req, res) => {
     res.render("second");
-    try{
-        const user3 = await Sec.find({});
-        res.send(user3); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
 })
 
 
@@ -211,16 +189,8 @@ try{
 
 //third
 
-app.get("/third",async (req,res) => {
-
+app.get("/third",(req,res) => {
     res.render("third");
-    try{
-        const user4 = await Apps.find({});
-        res.send(user4); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
 })
 
 
@@ -243,15 +213,8 @@ app.post("/third",async (req,res) =>{
 })
 
 //fourth
-app.get("/fourth",async (req,res) => {
+app.get("/fourth",(req,res) => {
     res.render("fourth");
-    try{
-        const user5 = await Appwhich.find({});
-        res.send(user5); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
 })
 
 app.post("/fourth",async (req,res) => {
@@ -275,15 +238,9 @@ app.post("/fourth",async (req,res) => {
 
 //fifth
 
-app.get("/fifth",async (req, res) => {
+app.get("/fifth",(req, res) => {
     res.render("fifth");
-    try{
-        const user6 = await Crit.find({});
-        res.send(user6); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
+
 })
 
 app.post("/fifth",async (req, res) => {
@@ -305,15 +262,8 @@ app.post("/fifth",async (req, res) => {
 })
 
 //sixth
-app.get("/sixth",async (req,res) => {
+app.get("/sixth",(req,res) => {
     res.render("sixth");
-    try{
-        const user7 = await AppOwn.find({});
-        res.send(user7); 
-        }
-        catch(e){
-            res.status(400).send("Connection not established");
-        }
 })
 
 app.post("/sixth", async (req, res) => {
@@ -336,15 +286,8 @@ app.post("/sixth", async (req, res) => {
 
 //seventh
 
-app.get("/seventh",async (req,res) => {
+app.get("/seventh",(req,res) => {
     res.render("seventh");
-    try{
-    const user8 = await Apm.find({});
-    res.send(user8); 
-    }
-    catch(e){
-        res.status(400).send("Connection not established");
-    }
 })
 
 app.post("/seventh", async (req, res) => {
@@ -380,20 +323,32 @@ app.get("/logged",async (req,res) => {
 
 //admin login
 
-
 app.get("/admin",(req, res) => {
     res.render("admin");
 })
 
 
-app.post("/admin",(req, res) =>{
-    try{    
+app.post("/admin",async (req, res) => {
+    try{
+        const usemail = req.body.email;
+        const ip = req.body.ipadrs;
+//        const sec1 =req.body.sgn;
+    let curs1 = dbo.collection('Register').findOne({usemail:email});
 
-    }catch(error){
-        res.status(400).send("Connection not established");
+    if(usemail == curs1){
+            res.status(201).render("first");
+//                console.log(password);
+//                console.log(isMatch);
+        }else{
+            res.send("User does not exist");
+        }
     }
-
+    catch (error){
+    res.status(400).send("Connection not established");
+}
 })
+
+
 
 
 app.post("/regions",async (req, res) => {
@@ -428,7 +383,7 @@ app.post("/login", async (req, res) => {
         const isMatch = bcrypt.compare(password, useremail.password);
         const token = await useremail.generateAuthToken();
 
-        console.log("the token part" + token);
+//        console.log("the token part" + token);
 
 
     if(isMatch){
@@ -466,12 +421,12 @@ app.post("/register", async (req, res) =>{
             })
 
 // password hashing will happen in between this section 
-            console.log("the success part" + registerEmp);
+//            console.log("the success part" + registerEmp);
     
             const token = await registerEmp.generateAuthToken();
-            console.log("the token part" + token);
+//            console.log("the token part" + token);
 
-            const register = await registerEmp.save();
+//            const register = await registerEmp.save();
             res.status(201).render("index")
         }
     }   
