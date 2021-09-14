@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+        <div class="a">
+        {{>header}}
+        {{>navbar}}
+            <form action="/users" method="POST">
+                <h2>Users Tables</h2>
+
+                <label for="ipamid">IPAMID:-</label>
+                <input type="text" name="ipamid" id="ipamid" required><br>
+
+                <label for="uname">User Name:-</label>
+                <input type="text" name="uname" id="uname" required><br>
+
+                <label for="utype">User Type:-</label>
+                <input type="text" name="utype" id="utype" required><br>
+
+                <label for="upri">User Privilages:-</label>
+                <input type="text" name="upri" id="upri" required><br>
+
+                <label for="notes">Notes:-</label>
+                <input type="text" name="notes" id="notes" required><br>
+
+                {{!-- <label for="date">Date:-</label>
+                <input type="text" name="date" id="date"><br>
+        
+                <label for="delete">Delete:-</label>
+                <input type="text" name="delete" id="delete"><br> --}}
+                <button type="submit">Save</button>
+            
+        
+        {{>footer}}   
+        </form>
+            </div>
+</body>
+</html>

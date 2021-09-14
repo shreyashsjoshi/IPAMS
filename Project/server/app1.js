@@ -1,4 +1,4 @@
-//updated today
+//updated API manipulated
 
 const express = require("express");
 const app = express();
@@ -41,18 +41,14 @@ app.get("/",(req,res) => {
 });
 
 //fetch data
-app.get("/all", (req, res) =>{
-    res.send([1,2,3]);
-})
-app.get("/all/:id",async (req,res) => {
-    res.send(req.params.id);
+
+app.get("/all",async (req,res) => {
     try{
     const user1 = await Usetable.find({});
  
     const user2 = await Jaaga.find({});
  
-    const user3 = await Sec.find({});
-    res.send(user1).send(user2);
+    const user3 = await Sec.find({}).select({ipadrs:1});
     res.send(user3); 
 
 }
