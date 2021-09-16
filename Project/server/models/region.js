@@ -11,18 +11,18 @@ const RegionSchema = new mongoose.Schema({
     },
     postaladdress: {
         type : Number,
-        required :true
+
     },
     notes : {
         type :  String,
-        required : true
+
     },
     date : {
-        type : Date
+        type : String
     },
     version : {
         type : Number,
-        required : true
+
     },
 
     delete : {

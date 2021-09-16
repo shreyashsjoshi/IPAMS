@@ -9,29 +9,23 @@
 </head>
 <body>
     <div class="a">
+    <form action="/apmid" method="POST">
     {{>header}}
     {{>navbar}}
-        <form action="/apmid" method="POST">
-    <h2>Welcome to the APMID</h2>
-        <label for="apmuuid">APMUUID:-</label>
-        <input type="text" name="apmuuid" id="apmuuid" required><br>
-        
-        <label for="apmid">Enter the APM ID:-</label>
-        <input type="text" name="apmid" id="apmid" required><br>
-        
-        <label for="appname">Application Name:-</label>
-        <input type="text" name="appname" id="appname" required><br>
+    <h2>IPAM by Smartedge</h2>
 
-        <label for="appnotes">Notes:-</label>
-        <input type="text" name="appnotes" id="appnotes" required><br>
+    <br>
+    <label for="apmid">APMID:-</label>
+    <input type="text" id="apmid" name="apmid" required><br>
 
-        {{!-- <label for="date">Date:-</label>
-        <input type="text" name="date" id="date" required><br>
-        
-        <label for="delete">Delete:-</label>
-        <input type="text" name="delete" id="delete"><br> --}}
 
-        <button type="submit">Save</button>
+    <br>
+    <label for="apmnote">Note:-</label>
+    <input type="text" id="apmnote" name="apmnote"><br>
+
+    <br>
+    <button type="submit">SUBMIT</button>
+
     {{>footer}}
     </form>
     </div>

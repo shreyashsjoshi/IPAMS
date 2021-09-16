@@ -8,6 +8,14 @@ const SecuritySchema = new mongoose.Schema({
         ipadrs : {
             type : String
         },
+        ipadrs : {
+            type : String
+        },
+
+        sub : {
+            type : String
+        },
+
         sgn : {
             type : String
         },

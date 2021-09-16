@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    {{>header}}
+    {{>navbar}}
+    <div class="a">
+    <form action="/apptype" method="POST">
+    <h2>IPAM by Smartedge</h2>
+    
+
+    <br>
+    <label for="atname">Application Type:-</label>
+    <input type="text" id="atname" name="atname" placeholder="Application Type Name" required><br>
+
+    <br>
+    <label for="atnote">Note:-</label>
+    <input type="text" id="atnote" name="atnote"><br>
+
+    <br>
+    <button type="submit">NEXT</button>
+    {{>footer}}
+    
+    </form>
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-//updated API manipulated
+//updated 05:07 PM 16/09/2021
 
 const express = require("express");
 const app = express();
@@ -21,6 +21,7 @@ const AppOwn = require("./models/appowner");
 const Usetable = require("./models/usertable");
 const Appwhich = require("./models/apptable");
 const Central = require("./models/central");
+const Area = require("./models/region");
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
@@ -60,20 +61,16 @@ catch(e){
 //central db
 
 app.get("/enter",async (req, res) => {
-    try{
-    const user100 =  await Central.find({});
-    res.send(user100);
-    }
-    catch(err){
-        res.status(400).send("Connection not established");
-    }
+    res.render("enter");
 })
 
-app.post("/enter",async(req, res) =>{
+app.post("/enter", async (req, res) => {
 
     try{
         const middle = new Central({
-            ipam : req.body.ipam,
+//            ipam : req.body.ipam,
+            uname : req.body.uname,
+            email : req.body.email,
             region : req.body.region,
             ipad : req.body.ipad,
             subnet : req.body.subnet,
@@ -95,8 +92,7 @@ app.post("/enter",async(req, res) =>{
 })
 
        const central = await middle.save();
-       console.log("Data Saved");
-       res.status(201).render("first");
+       res.status(201).render("/");
 
 }catch(error){  
     res.status(400).send("Connection not established");
@@ -169,6 +165,8 @@ app.post("/second", async (req, res) => {
 try{
     const secGT = new Sec({
         ipadrs : req.body.ipadrs,
+        sub : req.body.sub,
+        dgate : req.body.dgate,
         sgn : req.body.sgn, 
         sgnote : req.body.sgnote,
         sdate : start,
@@ -185,28 +183,28 @@ try{
 
 //third
 
-app.get("/third",(req,res) => {
-    res.render("third");
-})
+// app.get("/third",(req,res) => {
+//     res.render("third");
+// })
 
 
-app.post("/third",async (req,res) =>{
-    try{
-        const appt = new Apps
-        ({
-        atname : req.body.atname,
-        atnote : req.body.atnote,
-        date : start
-        })
+// app.post("/third",async (req,res) =>{
+//     try{
+//         const appt = new Apps
+//         ({
+//         atname : req.body.atname,
+//         atnote : req.body.atnote,
+//         date : start
+//         })
         
-        const apps = await appt.save();
-        res.status(201).render("fourth")
-    }
-    catch(err){
-        res.status(400).send("connection not established");
-    }
+//         const apps = await appt.save();
+//         res.status(201).render("fourth")
+//     }
+//     catch(err){
+//         res.status(400).send("connection not established");
+//     }
 
-})
+// })
 
 //fourth
 app.get("/fourth",(req,res) => {
@@ -258,27 +256,28 @@ app.post("/fifth",async (req, res) => {
 })
 
 //sixth
-app.get("/sixth",(req,res) => {
-    res.render("sixth");
-})
 
-app.post("/sixth", async (req, res) => {
-    try{
-        const own = new AppOwn({
-            appownermail : req.body.appownermail,
-            apponame : req.body.apponame,
-            apptelephone : req.body.apptelephone,
-            appnote : req.body.appnote,
-            date : start
-        })
-        const appown = await own.save();
-        res.status(201).render("seventh");
-    }
-    catch(err){
-        res.status(400).send("Connection not established");
-    }
+// app.get("/sixth",(req,res) => {
+//     res.render("sixth");
+// })
 
-})
+// app.post("/sixth", async (req, res) => {
+//     try{
+//         const own = new AppOwn({
+//             appownermail : req.body.appownermail,
+//             apponame : req.body.apponame,
+//             apptelephone : req.body.apptelephone,
+//             appnote : req.body.appnote,
+//             date : start
+//         })
+//         const appown = await own.save();
+//         res.status(201).render("seventh");
+//     }
+//     catch(err){
+//         res.status(400).send("Connection not established");
+//     }
+
+// })
 
 //seventh
 
@@ -298,8 +297,115 @@ app.post("/seventh", async (req, res) => {
         const apm = await apmid.save();
         res.status(201).render("index");
 
-    }catch(error){
-        res.status(400).send(error);
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+//to add new details in collections
+
+app.get("/regions",(req, res) => {
+    res.render("regions");
+});
+
+app.post("/regions",async (req, res) => {
+    try{
+        const reg = Area({
+            region:req.body.region,
+            postaladdress:req.body.postaladdress,
+            notes:req.body.notes,
+            date : start
+        })
+        const ares = await reg.save();
+        res.status(201).render("enter");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+});
+
+app.get("/security",(req, res) => {
+    res.render("security");
+});
+
+app.post("/security",async (req, res) => {
+    try{
+        const abc = Sec({
+            sgn : req.body.sgn,
+            sgnote : req.body.sgnote,
+            sdate : start
+        })
+        const sec = await abc.save();
+        res.status(201).render("enter");
+    }
+    catch(error){
+        res.status(400).send("Connection not established");
+    }
+})
+
+// app type (third)
+app.get("/apptype",(req, res) => {
+    res.render("apptype");
+});
+
+app.post("/apptype",async (req,res) =>{
+    try{
+        const appt = new Apps
+        ({
+        atname : req.body.atname,
+        atnote : req.body.atnote,
+        date : start
+        })
+        
+        const apps = await appt.save();
+        res.status(201).render("enter")
+    }
+    catch(err){
+        res.status(400).send("connection not established");
+    }
+});
+//app owner (sixth)
+app.get("/appowner",(req, res) => {
+    res.render("appowner");
+});
+app.post("/appowner",async (req,res) =>{
+try{
+    const own = new AppOwn({
+        appownermail : req.body.appownermail,
+        apponame : req.body.apponame,
+        apptelephone : req.body.apptelephone,
+        appnote : req.body.appnote,
+        date : start
+    })
+    const appown = await own.save();
+    res.status(201).render("enter");
+}
+catch(err){
+    res.status(400).send("Connection not established");
+}
+
+})
+
+app.get("/apmid",(req,res) => {
+    res.render("apmid");
+})
+
+app.post("/apmid", async (req, res) => {
+    try{
+        const apmid = new Apm({
+
+            apmid : req.body.apmid,
+//ask shekhar            appname : req.body.appname,
+            appnotes : req.body.apmnote,
+            date : start
+        })        
+        const apm = await apmid.save();
+        res.status(201).render("enter");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
     }
 
 })

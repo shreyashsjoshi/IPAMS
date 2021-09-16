@@ -5,17 +5,23 @@ const CentralSchema = new mongoose.Schema({
 ipam : {
     type : String
 },
+uname : {
+    type : String
+},
+email : {
+    type : String
+},
 region : {
     type : String
 },
 ipad : {
-    type : Number
+    type : String
 },
 subnet : {
     type : Number
 },
 gateway : {
-    type : Number
+    type : String
 },
 vlanID:{
     type : Number
@@ -25,7 +31,7 @@ date : {
 },
 
 requestID : {
-    type : String
+    type : Number
 },
 
 assigndby : {
@@ -64,6 +70,6 @@ aapm : {
 
 })
 
-const Central = new mongoose.model("central", CentralSchema);
+const Central = new mongoose.model("ct", CentralSchema);
 
 module.exports = Central;

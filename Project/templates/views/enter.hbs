@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+    <form action="/enter" method="POST">
+    <div class="a">
+    {{>header}}
+    {{>navbar}}
+        <h2>IPAM by Smartedge</h2>
+    
+      <br>
+    <label for="uname">Name:-</label>
+    <input type="text" id="uname" name="uname" required placeholder="Please enter full name">
+    
+    <label for="email">Email:-</label>
+    <input type="email" id="email" name="email" required><br>  
+
+    <br>
+    <label for="region">Region:-</label>
+        <select name="region" id="region" required>
+            <option value="">Select Region</option>
+            <option value="Pune">Pune</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Delhi">Delhi</option>
+        </select>
+        <br>
+    <small>Click <a href="/regions">here</a> to add new region</small><br>
+
+    <br>
+    <label for="ipad">IP Address:-</label>
+    <input type="text" id="ipad" name="ipad" required placeholder="Device Identity">
+    
+
+    <label for="subnet">Subnet:-</label>
+        <select name="subnet" id="subnet" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit One</option>
+        </select>
+    <br>
+
+    <br>
+    <label for="gateway">Gateway:-</label>
+    <input type="text" id="gateway" name="gateway" required placeholder="Default">
+
+    <label for="vlanID">VLAN ID:-</label>
+    <input type="text" id="vlanID" name="vlanID" required placeholder="VLAN"><br>
+
+    <br>
+    <label for="requestID">Request ID:-</label>
+    <input type="text" id="requestID" name="requestID" required placeholder="Number">
+
+    <label for="assigndby">Assigend By:-</label>
+    <input type="text" id="assigndby" name="assigndby" required placeholder="Name"><br>
+
+    <br>
+    <label for="vmname">VM Name:-</label>
+    <input type="text" id="vmname" name="vmname" required placeholder="Name">    
+
+    <label for="dept">Department Name:-</label>
+    <input type="text" id="dept" name="dept" required placeholder="Name"><br>    
+
+    <br>
+    <label for="secgrp">Security Group:-</label>
+        <select name="secgrp" id="secgrp" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit Two</option>
+        </select>
+        <br>
+    <small>Click <a href="/security">here</a> to add new Security Group</small><br>
+
+    <br>
+    <label for="appname">Application Name:-</label>
+        <select name="appname" id="appname" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit Three</option>
+        </select>
+        <br>
+
+    <br>
+    <label for="apptype">Application Type:-</label>
+        <select name="apptype" id="apptype" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit Four</option>
+        </select>
+        <br>
+    <small>Click <a href="/apptype">here</a> to add new Application Type</small><br>
+
+    <br>
+    <label for="appown">Application Owner:-</label>
+        <select name="appown" id="appown" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit Five</option>
+        </select>
+    <br>
+    <small>Click <a href="/appowner">here</a> to add new Application Owner</small><br>
+
+    <br>
+    <label for="appmail">Application ID:-</label>
+        <select name="appmail" id="appmail" required>
+            <option value="">Select</option>
+            <option value="Pune">Edit Six</option>
+        </select>
+
+    <label for="comments">Comments:-</label>
+    <input type="text" id="comments" name="comments" placeholder="(Optional)"><br>
+
+    <br>
+    <label for="faceapp">Facing Application:-</label>
+    <input type="text" id="faceapp" name="faceapp" placeholder="App Name">
+
+    <label for="aapm">APMID:-</label>
+    <input type="text" id="aapm" name="aapm" required>
+
+    <small>Click <a href="/apmid">here</a> to add new APM</small><br>
+
+    <br>
+    <button type="submit">SUBMIT</button>
+    <br>
+
+    </div>
+    </form>
+   {{>footer}}
+
+ 
+</body>
+</html>

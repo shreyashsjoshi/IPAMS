@@ -6,41 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
     {{>header}}
     {{>navbar}}
-        <form action="/appowner" method="POST">
-        <div class="a">
-            <h2>Application Owners Details</h2>
-            {{!-- <label for="appownerid">App Owner ID:-</label>
-            <input type="text" name="appownerid" id="appownerid"><br> --}}
-            
-            <label for="appownermail">Owner Name:-</label>
-            <input type="text" name="appownermail" id="appownermail" required><br>
+    <div class="a">
+    <form action="/appowner" method="POST">
+    <h2>IPAM by Smartedge</h2>    
 
-            <label for="apptelephone">Telephone:-</label>
-            <input type="text" name="apptelephone" id="apptelephone" required><br>
+    <label for="appownermail">Owner Mail ID:-</label>
+    <input type="email" id="appownermail" name="appownermail" placeholder="Application Owner" required><br>
 
-            <label for="appfname">User First Name:-</label>
-            <input type="text" name="appfname" id="appfname" required><br>
+    <br>    
+    <label for="apponame">Owner Name:-</label>
+    <input type="text" id="apponame" name="apponame" placeholder="Application owner full name" required><br>
 
-            <label for="applname">User Last Name:-</label>
-            <input type="text" name="applname" id="applname" required><br>
+    <br>
+    <label for="apptelephone">Owner Contact:-</label>
+    <input type="text" id="apptelephone" name="apptelephone" placeholder="Application owner Phone number" required><br>
 
-            <label for="appcrit">Criticality:-</label>
-            <input type="text" name="appcrit" id="appcrit" required><br>
+    <br>
+    <label for="appnote">Note:-</label>
+    <input type="text" id="appnote" name="appnote"><br>  
 
-            {{!-- <label for="date">Date:-</label>
-            <input type="text" name="date" id="date"><br> --}}
+    <br>
+    <button type="submit">NEXT</button>   
 
-            {{!-- <label for="delete">Delete:-</label> 
-            <input type="text" name="delete" id="delete"><br> --}}
-
-            <button type="submit">Save</button>
-        </div>
-    {{>footer}}
     </form>
+    </div>
+
 </body>
-</html>
+</html>l
