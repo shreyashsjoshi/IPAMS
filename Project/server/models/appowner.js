@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const OwnSchema = new mongoose.Schema({
         //appownerid will be auto generated for each security group entrywill be auto generated for each security group entry
         appownerid : {
-            type:Number
+            type : String
         },
         appownermail : {
             type:String

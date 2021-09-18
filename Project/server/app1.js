@@ -1,4 +1,4 @@
-//updated 05:07 PM 16/09/2021
+//updated
 
 const express = require("express");
 const app = express();
@@ -22,6 +22,9 @@ const Usetable = require("./models/usertable");
 const Appwhich = require("./models/apptable");
 const Central = require("./models/central");
 const Area = require("./models/region");
+const Admin = require("./models/admin");
+const autoIncrement = require('mongoose-auto-increment');
+const {v4 : uuidv4} = require('uuid')
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
@@ -43,16 +46,20 @@ app.get("/",(req,res) => {
 
 //fetch data
 
-app.get("/all",async (req,res) => {
-    try{
-    const user1 = await Usetable.find({});
- 
-    const user2 = await Jaaga.find({});
- 
-    const user3 = await Sec.find({}).select({ipadrs:1});
-    res.send(user3); 
+app.post("/admin",async (req,res) => {
 
-}
+    try{
+        
+        const unm = req.body.uname;
+        const em = req.body.email;  
+    
+        const user1 = await Central
+        .find({$and : [{uname : unm}, { email : em} ]});
+//            {uname : {$and : [{unm},{em}]}})
+//        .select({uname : 1});
+        
+        res.send(user1); 
+    }
 catch(e){
     res.status(400).send("Connection not established");
 }
@@ -92,12 +99,11 @@ app.post("/enter", async (req, res) => {
 })
 
        const central = await middle.save();
-       res.status(201).render("/");
+       res.status(201).render("index");
 
 }catch(error){  
     res.status(400).send("Connection not established");
 }
-
 
 })
 
@@ -116,6 +122,7 @@ app.get("/user",(req, res) => {
 app.post("/user",async (req, res) => {
 
     try{
+
             const useme = new Usetable({
                 uname:req.body.uname,
                 email:req.body.email
@@ -214,9 +221,11 @@ app.get("/fourth",(req,res) => {
 app.post("/fourth",async (req,res) => {
     try
     {
+        const newId = uuidv4();
         const appw = new Appwhich({
+            
 
-            appnm : req.body.appnm, 
+            appnm : newId, 
             appnoteds : req.body.appnoteds,
             date : start
         }) 
@@ -311,7 +320,9 @@ app.get("/regions",(req, res) => {
 
 app.post("/regions",async (req, res) => {
     try{
+        const newId1 = uuidv4();
         const reg = Area({
+            regionid : newId1,
             region:req.body.region,
             postaladdress:req.body.postaladdress,
             notes:req.body.notes,
@@ -332,7 +343,9 @@ app.get("/security",(req, res) => {
 
 app.post("/security",async (req, res) => {
     try{
+        const newId2 = uuidv4();
         const abc = Sec({
+            sgid : newId2,
             sgn : req.body.sgn,
             sgnote : req.body.sgnote,
             sdate : start
@@ -352,8 +365,10 @@ app.get("/apptype",(req, res) => {
 
 app.post("/apptype",async (req,res) =>{
     try{
+        const newId3 = uuidv4();
         const appt = new Apps
         ({
+        atid : newId3,
         atname : req.body.atname,
         atnote : req.body.atnote,
         date : start
@@ -372,7 +387,11 @@ app.get("/appowner",(req, res) => {
 });
 app.post("/appowner",async (req,res) =>{
 try{
+
+    const newId4 = uuidv4();
     const own = new AppOwn({
+        
+        appownerid : newId4,
         appownermail : req.body.appownermail,
         apponame : req.body.apponame,
         apptelephone : req.body.apptelephone,
@@ -430,25 +449,25 @@ app.get("/admin",(req, res) => {
 })
 
 
-app.post("/admin",async (req, res) => {
-    try{
-        const usemail = req.body.email;
-        const ip = req.body.ipadrs;
-//        const sec1 =req.body.sgn;
-    let curs1 = dbo.collection('Register').findOne({usemail:email});
+// app.post("/admin",async (req, res) => {
+//     try{
+//         const usemail = req.body.email;
+//         const ip = req.body.ipadrs;
+// //        const sec1 =req.body.sgn;
+//     let curs1 = dbo.collection('Register').findOne({usemail:email});
 
-    if(usemail == curs1){
-            res.status(201).render("first");
-//                console.log(password);
-//                console.log(isMatch);
-        }else{
-            res.send("User does not exist");
-        }
-    }
-    catch (error){
-    res.status(400).send("Connection not established");
-}
-})
+//     if(usemail == curs1){
+//             res.status(201).render("first");
+// //                console.log(password);
+// //                console.log(isMatch);
+//         }else{
+//             res.send("User does not exist");
+//         }
+//     }
+//     catch (error){
+//     res.status(400).send("Connection not established");
+// }
+// })
 
 
 
@@ -478,11 +497,11 @@ app.post("/regions",async (req, res) => {
 //to login the user 
 app.post("/login", async (req, res) => {
     try{
-        const email = req.body.email;
+        const mail = req.body.email;
         const password = req.body.pass;
 
-        const useremail = await Register.findOne({email:email});    
-        const isMatch = bcrypt.compare(password, useremail.password);
+        const useremail = await Register.findOne({email:mail});    
+        const isMatch = bcrypt.compare(pass, useremail.password);
         const token = await useremail.generateAuthToken();
 
 //        console.log("the token part" + token);

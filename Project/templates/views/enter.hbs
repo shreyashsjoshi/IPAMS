@@ -10,12 +10,16 @@
 </head>
 <body>
 
-    <form action="/enter" method="POST">
     <div class="a">
+
     {{>header}}
     {{>navbar}}
-        <h2>IPAM by Smartedge</h2>
+
+    <form action="/enter" method="POST">
     
+    <h2>IPAM by Smartedge</h2>
+
+
       <br>
     <label for="uname">Name:-</label>
     <input type="text" id="uname" name="uname" required placeholder="Please enter full name">
@@ -127,10 +131,10 @@
     <button type="submit">SUBMIT</button>
     <br>
 
-    </div>
+    
     </form>
-   {{>footer}}
+    </div>
 
- 
+
 </body>
 </html>

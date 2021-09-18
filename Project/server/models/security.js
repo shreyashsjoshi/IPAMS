@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const SecuritySchema = new mongoose.Schema({
         // SGID will be auto generated for each security group entry
         sgid : {
-            type : Number
+            type : String
         },
         ipadrs : {
             type : String

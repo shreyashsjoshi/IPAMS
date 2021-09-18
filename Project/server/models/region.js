@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const autoIncrement = require('mongoose-auto-increment');
 
 const RegionSchema = new mongoose.Schema({
     //regionID will be auto generated when region is entered
     regionid:{
-        type : Number
-
+        type : String,
     },
     region:{
         type : String
