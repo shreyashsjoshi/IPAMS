@@ -9,6 +9,7 @@ const port = process.env.PORT   ||  2000;
 const jwt = require("jsonwebtoken");  
 const mongo = require('mongodb');
 const start = Math.floor(Date.now()/1000);
+const ejs = require("ejs");
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(static_path));
 app.set("view engine","hbs");
+
 app.set("views",template_path);
 hbs.registerPartials(partials_path);
 require("./db/connection");
@@ -44,9 +46,14 @@ app.get("/",(req,res) => {
     res.render("index");
 });
 
+app.get("/adminresult",(req,res) => {
+    res.render("index");
+});
+
+
 //fetch data
 
-app.post("/admin",async (req,res) => {
+app.post("/admin",async (req,res,user1) => {
 
     try{
         
@@ -57,10 +64,10 @@ app.post("/admin",async (req,res) => {
         .find({$and : [{uname : unm}, { email : em} ]});
 //            {uname : {$and : [{unm},{em}]}})
 //        .select({uname : 1});
-        
-        res.send(user1); 
+                res.render('adminresult',{udata:user1}); 
     }
-catch(e){
+
+    catch(e){
     res.status(400).send("Connection not established");
 }
 })

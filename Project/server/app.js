@@ -1,4 +1,4 @@
-//updated 04:55pm 03-09-21
+//updated 12-11-2021 Friday
 
 const express = require("express");
 const app = express();
@@ -9,6 +9,7 @@ const port = process.env.PORT   ||  2000;
 const jwt = require("jsonwebtoken");  
 const mongo = require('mongodb');
 const start = Math.floor(Date.now()/1000);
+const ejs = require("ejs");
 
 const Register = require("./models/register");
 const Ipadd = require("./models/registerip");
@@ -20,6 +21,11 @@ const Apm = require("./models/apmid");
 const AppOwn = require("./models/appowner");
 const Usetable = require("./models/usertable");
 const Appwhich = require("./models/apptable");
+const Central = require("./models/central");
+const Area = require("./models/region");
+const Admin = require("./models/admin");
+const autoIncrement = require('mongoose-auto-increment');
+const {v4 : uuidv4} = require('uuid')
 
 const static_path = path.join(__dirname,"../public");
 const template_path = path.join(__dirname,"../templates/views");
@@ -30,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(static_path));
 app.set("view engine","hbs");
+
 app.set("views",template_path);
 hbs.registerPartials(partials_path);
 require("./db/connection");
@@ -37,7 +44,71 @@ require("./db/connection");
 //home url
 app.get("/",(req,res) => {
     res.render("index");
+});
+
+//fetch data
+
+app.post("/admin",async (req,res) => {
+
+    try{
+        
+        const unm = req.body.uname;
+        const em = req.body.email;  
+    
+        const user1 = await Central
+        .find({$and : [{uname : unm}, { email : em} ]});
+//            {uname : {$and : [{unm},{em}]}})
+//        .select({uname : 1});
+                res.send(user1); 
+    }
+
+    catch(e){
+    res.status(400).send("Connection not established");
+}
 })
+
+//central db
+
+app.get("/enter",async (req, res) => {
+    res.render("enter");
+})
+
+app.post("/enter", async (req, res) => {
+
+    try{
+        const middle = new Central({
+//            ipam : req.body.ipam,
+            uname : req.body.uname,
+            email : req.body.email,
+            region : req.body.region,
+            ipad : req.body.ipad,
+            subnet : req.body.subnet,
+            gateway : req.body.gateway,
+            vlanID : req.body.vlanID,
+            date : start,
+            requestID : req.body.requestID,
+            assigndby : req.body.assigndby,
+            vmname : req.body.vmname,
+            dept : req.body.dept,
+            secgrp : req.body.secgrp,
+            appname : req.body.appname,
+            apptype : req.body.apptype,
+            appown : req.body.appown,
+            appmail : req.body.appmail,
+            comments : req.body.comments,
+            faceapp : req.body.faceapp,
+            aapm : req.body.aapm
+})
+
+       const central = await middle.save();
+       res.status(201).render("index");
+
+}catch(error){  
+    res.status(400).send("Connection not established");
+}
+
+})
+
 // to the user login
 app.get("/login",(req,res) => {
     res.render("login");
@@ -53,6 +124,7 @@ app.get("/user",(req, res) => {
 app.post("/user",async (req, res) => {
 
     try{
+
             const useme = new Usetable({
                 uname:req.body.uname,
                 email:req.body.email
@@ -102,6 +174,8 @@ app.post("/second", async (req, res) => {
 try{
     const secGT = new Sec({
         ipadrs : req.body.ipadrs,
+        sub : req.body.sub,
+        dgate : req.body.dgate,
         sgn : req.body.sgn, 
         sgnote : req.body.sgnote,
         sdate : start,
@@ -118,27 +192,28 @@ try{
 
 //third
 
-app.get("/third",(req,res) => {
-    res.render("third");
-})
+// app.get("/third",(req,res) => {
+//     res.render("third");
+// })
 
-app.post("/third",async (req,res) =>{
-    try{
-        const appt = new Apps
-        ({
-        atname : req.body.atname,
-        atnote : req.body.atnote,
-        date : start
-        })
+
+// app.post("/third",async (req,res) =>{
+//     try{
+//         const appt = new Apps
+//         ({
+//         atname : req.body.atname,
+//         atnote : req.body.atnote,
+//         date : start
+//         })
         
-        const apps = await appt.save();
-        res.status(201).render("fourth")
-    }
-    catch(err){
-        res.status(400).send("connection not established");
-    }
+//         const apps = await appt.save();
+//         res.status(201).render("fourth")
+//     }
+//     catch(err){
+//         res.status(400).send("connection not established");
+//     }
 
-})
+// })
 
 //fourth
 app.get("/fourth",(req,res) => {
@@ -148,9 +223,11 @@ app.get("/fourth",(req,res) => {
 app.post("/fourth",async (req,res) => {
     try
     {
+        const newId = uuidv4();
         const appw = new Appwhich({
+            
 
-            appnm : req.body.appnm, 
+            appnm : newId, 
             appnoteds : req.body.appnoteds,
             date : start
         }) 
@@ -190,33 +267,33 @@ app.post("/fifth",async (req, res) => {
 })
 
 //sixth
-app.get("/sixth",(req,res) => {
-    res.render("sixth");
-})
 
-app.post("/sixth", async (req, res) => {
-    try{
-        const own = new AppOwn({
-            appownermail : req.body.appownermail,
-            apponame : req.body.apponame,
-            apptelephone : req.body.apptelephone,
-            appnote : req.body.appnote,
-            date : start
-        })
-        const appown = await own.save();
-        res.status(201).render("seventh");
-    }
-    catch(err){
-        res.status(400).send("Connection not established");
-    }
+// app.get("/sixth",(req,res) => {
+//     res.render("sixth");
+// })
 
-})
+// app.post("/sixth", async (req, res) => {
+//     try{
+//         const own = new AppOwn({
+//             appownermail : req.body.appownermail,
+//             apponame : req.body.apponame,
+//             apptelephone : req.body.apptelephone,
+//             appnote : req.body.appnote,
+//             date : start
+//         })
+//         const appown = await own.save();
+//         res.status(201).render("seventh");
+//     }
+//     catch(err){
+//         res.status(400).send("Connection not established");
+//     }
+
+// })
 
 //seventh
 
 app.get("/seventh",(req,res) => {
     res.render("seventh");
-//    res.send(Apm);
 })
 
 app.post("/seventh", async (req, res) => {
@@ -231,8 +308,125 @@ app.post("/seventh", async (req, res) => {
         const apm = await apmid.save();
         res.status(201).render("index");
 
-    }catch(error){
-        res.status(400).send(error);
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+})
+
+//to add new details in collections
+
+app.get("/regions",(req, res) => {
+    res.render("regions");
+});
+
+app.post("/regions",async (req, res) => {
+    try{
+        const newId1 = uuidv4();
+        const reg = Area({
+            regionid : newId1,
+            region:req.body.region,
+            postaladdress:req.body.postaladdress,
+            notes:req.body.notes,
+            date : start
+        })
+        const ares = await reg.save();
+        res.status(201).render("enter");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
+    }
+
+});
+
+app.get("/security",(req, res) => {
+    res.render("security");
+});
+
+app.post("/security",async (req, res) => {
+    try{
+        const newId2 = uuidv4();
+        const abc = Sec({
+            sgid : newId2,
+            sgn : req.body.sgn,
+            sgnote : req.body.sgnote,
+            sdate : start
+        })
+        const sec = await abc.save();
+        res.status(201).render("enter");
+    }
+    catch(error){
+        res.status(400).send("Connection not established");
+    }
+})
+
+// app type (third)
+app.get("/apptype",(req, res) => {
+    res.render("apptype");
+});
+
+app.post("/apptype",async (req,res) =>{
+    try{
+        const newId3 = uuidv4();
+        const appt = new Apps
+        ({
+        atid : newId3,
+        atname : req.body.atname,
+        atnote : req.body.atnote,
+        date : start
+        })
+        
+        const apps = await appt.save();
+        res.status(201).render("enter")
+    }
+    catch(err){
+        res.status(400).send("connection not established");
+    }
+});
+//app owner (sixth)
+app.get("/appowner",(req, res) => {
+    res.render("appowner");
+});
+app.post("/appowner",async (req,res) =>{
+try{
+
+    const newId4 = uuidv4();
+    const own = new AppOwn({
+        
+        appownerid : newId4,
+        appownermail : req.body.appownermail,
+        apponame : req.body.apponame,
+        apptelephone : req.body.apptelephone,
+        appnote : req.body.appnote,
+        date : start
+    })
+    const appown = await own.save();
+    res.status(201).render("enter");
+}
+catch(err){
+    res.status(400).send("Connection not established");
+}
+
+})
+
+app.get("/apmid",(req,res) => {
+    res.render("apmid");
+})
+
+app.post("/apmid", async (req, res) => {
+    try{
+        const apmid = new Apm({
+
+            apmid : req.body.apmid,
+//ask shekhar            appname : req.body.appname,
+            appnotes : req.body.apmnote,
+            date : start
+        })        
+        const apm = await apmid.save();
+        res.status(201).render("enter");
+
+    }catch(error){  
+        res.status(400).send("Connection not established");
     }
 
 })
@@ -252,20 +446,32 @@ app.get("/logged",async (req,res) => {
 
 //admin login
 
-
 app.get("/admin",(req, res) => {
     res.render("admin");
 })
 
 
-app.post("/admin",(req, res) =>{
-    try{    
+// app.post("/admin",async (req, res) => {
+//     try{
+//         const usemail = req.body.email;
+//         const ip = req.body.ipadrs;
+// //        const sec1 =req.body.sgn;
+//     let curs1 = dbo.collection('Register').findOne({usemail:email});
 
-    }catch(error){
-        res.status(400).send("Connection not established");
-    }
+//     if(usemail == curs1){
+//             res.status(201).render("first");
+// //                console.log(password);
+// //                console.log(isMatch);
+//         }else{
+//             res.send("User does not exist");
+//         }
+//     }
+//     catch (error){
+//     res.status(400).send("Connection not established");
+// }
+// })
 
-})
+
 
 
 app.post("/regions",async (req, res) => {
@@ -293,14 +499,14 @@ app.post("/regions",async (req, res) => {
 //to login the user 
 app.post("/login", async (req, res) => {
     try{
-        const email = req.body.email;
+        const mail = req.body.email;
         const password = req.body.pass;
 
-        const useremail = await Register.findOne({email:email});    
-        const isMatch = bcrypt.compare(password, useremail.password);
+        const useremail = await Register.findOne({email:mail});    
+        const isMatch = bcrypt.compare(pass, useremail.password);
         const token = await useremail.generateAuthToken();
 
-        console.log("the token part" + token);
+//        console.log("the token part" + token);
 
 
     if(isMatch){
@@ -338,12 +544,12 @@ app.post("/register", async (req, res) =>{
             })
 
 // password hashing will happen in between this section 
-            console.log("the success part" + registerEmp);
+//            console.log("the success part" + registerEmp);
     
             const token = await registerEmp.generateAuthToken();
-            console.log("the token part" + token);
+//            console.log("the token part" + token);
 
-            const register = await registerEmp.save();
+//            const register = await registerEmp.save();
             res.status(201).render("index")
         }
     }   
